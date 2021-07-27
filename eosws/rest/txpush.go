@@ -156,7 +156,7 @@ func isValidJSON(payload []byte) bool {
 
 func (t *TxPusher) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	guarantee := r.Header.Get("X-Eos-Push-Guarantee")
-	pushOutput := r.Header.Get("X-Eos-Push-Guarantee-Output-Traces")
+	pushOutput := r.Header.Get("X-Eos-Push-Guarantee-Output-Inline-Traces")
 
 	ctx := r.Context()
 
