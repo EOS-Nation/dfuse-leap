@@ -541,8 +541,14 @@ func rangeScan(kvStore store.KVStore, keyStart, keyEnd []byte, limit int, keyOnl
 func printIterator(it *store.Iterator, printSizeLimit int) error {
 	count := 0
 	start := time.Now()
+
 	for it.Next() {
+
 		count++
+		if count%1000 == 0 {
+			zlog.Info("scanned 1000 keys", zap.Int("count", count), zap.Duration("time", -1*start.Sub(time.Now())))
+		}
+
 		kv := it.Item()
 		key, err := formatKey(kv.Key)
 		if err != nil {
