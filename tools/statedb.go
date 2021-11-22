@@ -7,6 +7,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"go.uber.org/zap"
 	"os"
 	"sort"
 	"strconv"
@@ -14,12 +15,12 @@ import (
 	"time"
 
 	"github.com/dfuse-io/dfuse-eosio/statedb"
-	"github.com/streamingfast/dstore"
 	"github.com/dustin/go-humanize"
 	"github.com/eoscanada/eos-go"
 	"github.com/klauspost/compress/zstd"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/streamingfast/dstore"
 	"github.com/streamingfast/fluxdb"
 	"github.com/streamingfast/kvdb/store"
 )
@@ -32,6 +33,7 @@ var statedbCmd = &cobra.Command{Use: "state", Short: "Read from StateDB"}
 var statedbKeyCmd = &cobra.Command{Use: "key", Short: "Various operations on key", RunE: statedbKeyE, Args: cobra.MinimumNArgs(1)}
 var statedbScanCmd = &cobra.Command{Use: "scan", Short: "Scan read from StateDB store", RunE: statedbScanE, Args: cobra.MaximumNArgs(2)}
 var statedbPrefixCmd = &cobra.Command{Use: "prefix", Short: "Prefix read from StateDB store", RunE: statedbPrefixE, Args: cobra.MinimumNArgs(1)}
+var statedbPrefixSizeCmd = &cobra.Command{Use: "size", Short: "Prefix read from StateDB store with a size limit", RunE: statedbPrefixSizeE, Args: cobra.MinimumNArgs(1)}
 
 // Higher-level (model) calls
 var statedbIndexCmd = &cobra.Command{Use: "index", Short: "Various operations related to StateDB Tablet Indexes"}
@@ -72,6 +74,9 @@ func init() {
 	statedbScanCmd.PersistentFlags().Bool("key-only", false, "Only retrieve keys and not value when performing scan")
 	statedbScanCmd.PersistentFlags().Bool("unlimited", false, "Returns all results, ignore the limit value")
 
+	statedbPrefixSizeCmd.PersistentFlags().Int("size-limit", 1, "Size limit in bytes")
+	statedbPrefixSizeCmd.PersistentFlags().Bool("unlimited", false, "Returns all results, ignore the limit value")
+
 	statedbIndexCmd.PersistentFlags().Uint64("height", 0, "Block height where to look for the index, 0 means use latest block")
 
 	statedbIndexPruneCmd.PersistentFlags().Uint64("frequency", 0, "Pruning frequency, 1/N indexes will be pruned from the storage engine to reclaim space, never deleted most recent and least recent indexes")
@@ -89,6 +94,7 @@ func init() {
 	statedbCmd.AddCommand(statedbKeyCmd)
 	statedbCmd.AddCommand(statedbScanCmd)
 	statedbCmd.AddCommand(statedbPrefixCmd)
+	statedbCmd.AddCommand(statedbPrefixSizeCmd)
 	statedbCmd.AddCommand(statedbIndexCmd)
 	statedbCmd.AddCommand(statedbTabletCmd)
 	statedbCmd.AddCommand(statedbShardCmd)
@@ -158,6 +164,8 @@ func statedbScanE(cmd *cobra.Command, args []string) (err error) {
 	start := append(table, startKey...)
 	end := append(table, endKey...)
 
+	zlog.Info("starting range scan", zap.String("start", string(start)), zap.String("end", string(end)))
+
 	rangeScan(kv, start, end, limit, viper.GetBool("key-only"))
 	return nil
 }
@@ -192,6 +200,44 @@ func statedbPrefixE(cmd *cobra.Command, args []string) (err error) {
 		}
 
 		err = prefixScan(ctx, kv, prefix, limit, viper.GetBool("key-only"))
+		if err != nil {
+			return fmt.Errorf("prefix scan %x: %w", prefix, err)
+		}
+	}
+
+	return nil
+}
+
+func statedbPrefixSizeE(cmd *cobra.Command, args []string) (err error) {
+	kv, err := store.New(viper.GetString("dsn"), store.WithEmptyValue())
+	if err != nil {
+		return err
+	}
+
+	table, err := hex.DecodeString(viper.GetString("table"))
+	if err != nil {
+		return fmt.Errorf("table: %w", err)
+	}
+
+	limit := viper.GetInt("limit")
+	if viper.GetBool("unlimited") {
+		limit = store.Unlimited
+	}
+
+	ctx := cmd.Context()
+	for i, arg := range args {
+		prefixKey, err := stateDBStringToKey(arg)
+		if err != nil {
+			return fmt.Errorf("prefix key: %w", err)
+		}
+
+		prefix := append(table, prefixKey...)
+
+		if i != 0 {
+			fmt.Println()
+		}
+
+		err = prefixSizeScan(ctx, kv, prefix, limit, viper.GetInt("size-limit"))
 		if err != nil {
 			return fmt.Errorf("prefix scan %x: %w", prefix, err)
 		}
@@ -470,7 +516,14 @@ func prefixScan(ctx context.Context, kvStore store.KVStore, prefix []byte, limit
 		options = []store.ReadOption{store.KeyOnly()}
 	}
 
-	return printIterator(kvStore.Prefix(prefixCtx, prefix, limit, options...))
+	return printIterator(kvStore.Prefix(prefixCtx, prefix, limit, options...), 0)
+}
+
+func prefixSizeScan(ctx context.Context, kvStore store.KVStore, prefix []byte, limit int, sizeLimit int) error {
+	prefixCtx, cancelScan := context.WithCancel(ctx)
+	defer cancelScan()
+
+	return printIterator(kvStore.Prefix(prefixCtx, prefix, limit), sizeLimit)
 }
 
 func rangeScan(kvStore store.KVStore, keyStart, keyEnd []byte, limit int, keyOnly bool) error {
@@ -482,10 +535,10 @@ func rangeScan(kvStore store.KVStore, keyStart, keyEnd []byte, limit int, keyOnl
 		options = []store.ReadOption{store.KeyOnly()}
 	}
 
-	return printIterator(kvStore.Scan(prefixCtx, keyStart, keyEnd, limit, options...))
+	return printIterator(kvStore.Scan(prefixCtx, keyStart, keyEnd, limit, options...), 0)
 }
 
-func printIterator(it *store.Iterator) error {
+func printIterator(it *store.Iterator, printSizeLimit int) error {
 	count := 0
 	start := time.Now()
 	for it.Next() {
@@ -496,15 +549,24 @@ func printIterator(it *store.Iterator) error {
 			return err
 		}
 
-		cnt, err := json.Marshal(map[string]interface{}{
+		source := map[string]interface{}{
 			"key": map[string]string{
 				"hex":   hex.EncodeToString(kv.Key[1:]),
 				"human": key,
 			},
-			"value": hex.EncodeToString(kv.Value),
-		})
+		}
+
+		if printSizeLimit == 0 {
+			source["value"] = hex.EncodeToString(kv.Value)
+		} else if printSizeLimit > kv.Size() {
+			continue
+		} else {
+			source["size"] = humanize.Bytes(uint64(len(kv.Value)))
+		}
+
+		cnt, err := json.Marshal(source)
 		if err != nil {
-			fmt.Printf("unable to marshall row: %s\n", key)
+			fmt.Printf("unable to marshal row: %s\n", key)
 		} else {
 			fmt.Println(string(cnt))
 		}

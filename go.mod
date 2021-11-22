@@ -40,8 +40,6 @@ require (
 	github.com/lytics/ordpool v0.0.0-20130426221837-8d833f097fe7
 	github.com/manifoldco/promptui v0.8.0
 	github.com/mitchellh/go-testing-interface v1.14.1
-	github.com/onsi/ginkgo v1.11.0 // indirect
-	github.com/onsi/gomega v1.8.1 // indirect
 	github.com/paulbellamy/ratecounter v0.2.0
 	github.com/pkg/errors v0.9.1
 	github.com/rs/xid v1.2.1 // indirect
@@ -50,36 +48,36 @@ require (
 	github.com/spf13/cobra v1.1.3
 	github.com/spf13/viper v1.7.0
 	github.com/streamingfast/blockmeta v0.0.2-0.20210811194956-90dc4202afda
-	github.com/streamingfast/bstream v0.0.2-0.20210818195539-2295a96e0c68 // indirect
-	github.com/streamingfast/cli v0.0.3-0.20210811201236-5c00ec55462d // indirect
-	github.com/streamingfast/client-go v0.0.0-20210812010037-2ae1ded7ca05 // indirect
+	github.com/streamingfast/bstream v0.0.2-0.20210818195539-2295a96e0c68
+	github.com/streamingfast/cli v0.0.3-0.20210811201236-5c00ec55462d
+	github.com/streamingfast/client-go v0.0.0-20210812010037-2ae1ded7ca05
 	github.com/streamingfast/dauth v0.0.0-20210811181149-e8fd545948cc
 	github.com/streamingfast/dbin v0.0.0-20210809205249-73d5eca35dc5
 	github.com/streamingfast/derr v0.0.0-20210811180100-9138d738bcec
 	github.com/streamingfast/dgraphql v0.0.2-0.20210812004103-ce9976b66675
-	github.com/streamingfast/dgrpc v0.0.0-20210811180351-8646818518b2 // indirect
-	github.com/streamingfast/dhammer v0.0.0-20210811180702-456c4cf0a840 // indirect
-	github.com/streamingfast/dipp v1.0.1-0.20210811200841-d2cca4e058e6 // indirect
+	github.com/streamingfast/dgrpc v0.0.0-20210811180351-8646818518b2
+	github.com/streamingfast/dhammer v0.0.0-20210811180702-456c4cf0a840
+	github.com/streamingfast/dipp v1.0.1-0.20210811200841-d2cca4e058e6
 	github.com/streamingfast/dlauncher v0.0.0-20210811194929-f06e488e63da
 	github.com/streamingfast/dmesh v0.0.0-20210811181323-5a37ad73216b
 	github.com/streamingfast/dmetering v0.0.0-20210812002943-aa53fa1ce172
-	github.com/streamingfast/dmetrics v0.0.0-20210811180524-8494aeb34447 // indirect
-	github.com/streamingfast/dstore v0.1.1-0.20210811180812-4db13e99cc22 // indirect
+	github.com/streamingfast/dmetrics v0.0.0-20210811180524-8494aeb34447
+	github.com/streamingfast/dstore v0.1.1-0.20210811180812-4db13e99cc22
 	github.com/streamingfast/dtracing v0.0.0-20210811175635-d55665d3622a
 	github.com/streamingfast/firehose v0.1.1-0.20210818195906-078fa21b2cda
 	github.com/streamingfast/fluxdb v0.0.0-20210811195408-0515ef659298
-	github.com/streamingfast/jsonpb v0.0.0-20210811021341-3670f0aa02d0 // indirect
+	github.com/streamingfast/jsonpb v0.0.0-20210811021341-3670f0aa02d0
 	github.com/streamingfast/kvdb v0.0.2-0.20210811194032-09bf862bd2e3
-	github.com/streamingfast/logging v0.0.0-20210811175431-f3b44b61606a // indirect
+	github.com/streamingfast/logging v0.0.0-20210811175431-f3b44b61606a
 	github.com/streamingfast/merger v0.0.3-0.20210811195536-1011c89f0a67
 	github.com/streamingfast/node-manager v0.0.2-0.20210811195732-ccdf9f70dd0b
 	github.com/streamingfast/opaque v0.0.0-20210811180740-0c01d37ea308
-	github.com/streamingfast/pbgo v0.0.6-0.20210812023556-e996f9c4fb86 // indirect
+	github.com/streamingfast/pbgo v0.0.6-0.20210812023556-e996f9c4fb86
 	github.com/streamingfast/relayer v0.0.2-0.20210812020310-adcf15941b23
 	github.com/streamingfast/search v0.0.2-0.20210811200310-ec8d3b03e104
 	github.com/streamingfast/search-client v0.0.0-20210811200417-677bdb765983
-	github.com/streamingfast/shutter v1.5.0 // indirect
-	github.com/streamingfast/validator v0.0.0-20210812013448-b9da5752ce14 // indirect
+	github.com/streamingfast/shutter v1.5.0
+	github.com/streamingfast/validator v0.0.0-20210812013448-b9da5752ce14
 	github.com/stretchr/testify v1.7.0
 	github.com/teris-io/shortid v0.0.0-20201117134242-e59966efd125
 	github.com/thedevsaddam/govalidator v1.9.9

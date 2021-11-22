@@ -98,6 +98,8 @@ github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym
 github.com/DataDog/zstd v1.4.1 h1:3oxKN3wbHibqx897utPC2LTQU4J+IHWWJO+glkAkpFM=
 github.com/DataDog/zstd v1.4.1/go.mod h1:1jcaCB/ufaK+sKp1NBhlGmpz41jOoPQ35bpF36t7BBo=
 github.com/EOS-Nation/firehose v0.1.1-0.20210818092903-e36da6ade581/go.mod h1:8UMnd4hxCNBQAmzsOLOPoWYWRZs79rdeI7QpCerKRqM=
+github.com/EOS-Nation/firehose v0.1.1-0.20210818200630-ccd1d285dbe5 h1:3R2zKftQxz9l7P58mxOUXIapGU7eKF21Qzn5mJ7k658=
+github.com/EOS-Nation/firehose v0.1.1-0.20210818200630-ccd1d285dbe5/go.mod h1:zyl6gNAxp7fRJH/Ue8XMMzogpad/Jx/Tcq7m8Kz1Uys=
 github.com/GeertJohan/go.incremental v1.0.0/go.mod h1:6fAjUhbVuX1KcMD3c8TEgVUqmo4seqhv0i0kdATSkM0=
 github.com/GeertJohan/go.rice v1.0.0 h1:KkI6O9uMaQU3VEKaj01ulavtF7o1fWT7+pk/4voiMLQ=
 github.com/GeertJohan/go.rice v1.0.0/go.mod h1:eH6gbSOAUv07dQuZVnBmoDP8mgsM1rtixis4Tib9if0=
@@ -378,6 +380,7 @@ github.com/eoscanada/pitreos v1.1.1-0.20210810174831-3e4668dcda56 h1:0ar3mFETIXF
 github.com/eoscanada/pitreos v1.1.1-0.20210810174831-3e4668dcda56/go.mod h1:vRePDbKCTu1zksZ/V+Pyzpk4wZ9d6HQ2rpAnqsu7Nfo=
 github.com/eoscanada/pitreos v1.1.1-0.20210811185752-fa06394508d0 h1:eMyzIXEV2EwSV0u5OfTXdftTddNoltTd9VeZ1mZpO5M=
 github.com/eoscanada/pitreos v1.1.1-0.20210811185752-fa06394508d0/go.mod h1:0HbaqGK5cygDBBm1RQf9J3TMrtr/vyDC6iDSXxOWMNk=
+github.com/eosnationftw/dauth v0.0.0-20210818092801-fb989ed88d76 h1:mPvXqgtBALYk6WrIIo5aE3Ifqi2LAKWkT1nUDHKdbv0=
 github.com/eosnationftw/dauth v0.0.0-20210818092801-fb989ed88d76/go.mod h1:ZIJ6uQT4UOGYyfKgs4W2L4Mfr+63cNr71YdVVEunf78=
 github.com/ethereum/go-ethereum v1.9.9/go.mod h1:a9TqabFudpDu1nucId+k9S8R9whYaHnGBLKFouA5EAo=
 github.com/facebookgo/ensure v0.0.0-20200202191622-63f1cf65ac4c h1:8ISkoahWXwZR41ois5lSJBSVw4D0OV19Ht/JSTzvSv0=
