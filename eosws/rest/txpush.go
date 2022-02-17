@@ -22,12 +22,10 @@ import (
 	"io/ioutil"
 	"math/rand"
 	"net/http"
+	"os"
 	"sync/atomic"
 	"time"
 
-	"github.com/streamingfast/bstream"
-	"github.com/streamingfast/bstream/forkable"
-	"github.com/streamingfast/bstream/hub"
 	"github.com/dfuse-io/dfuse-eosio/codec"
 	"github.com/dfuse-io/dfuse-eosio/eosws"
 	"github.com/dfuse-io/dfuse-eosio/eosws/mdl"
@@ -35,6 +33,9 @@ import (
 	pbcodec "github.com/dfuse-io/dfuse-eosio/pb/dfuse/eosio/codec/v1"
 	"github.com/eoscanada/eos-go"
 	"github.com/eoscanada/eos-go/eoserr"
+	"github.com/streamingfast/bstream"
+	"github.com/streamingfast/bstream/forkable"
+	"github.com/streamingfast/bstream/hub"
 	"github.com/tidwall/gjson"
 	"go.uber.org/zap"
 )
@@ -157,6 +158,10 @@ func isValidJSON(payload []byte) bool {
 func (t *TxPusher) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	guarantee := r.Header.Get("X-Eos-Push-Guarantee")
 	pushOutput := r.Header.Get("X-Eos-Push-Guarantee-Output-Inline-Traces")
+
+	if os.Getenv("DFUSE_LOG_HEADER") == "true" {
+		zlog.Info("logging header", zap.String("X-Eos-Push-Guarantee", guarantee), zap.String("X-Eos-Push-Guarantee-Output-Inline-Traces", pushOutput))
+	}
 
 	ctx := r.Context()
 
