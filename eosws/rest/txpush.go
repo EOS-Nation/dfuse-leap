@@ -159,10 +159,6 @@ func (t *TxPusher) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	guarantee := r.Header.Get("X-Eos-Push-Guarantee")
 	pushOutput := r.Header.Get("X-Eos-Push-Guarantee-Output-Inline-Traces")
 
-	if os.Getenv("DFUSE_LOG_HEADER") == "true" {
-		zlog.Info("logging header", zap.String("X-Eos-Push-Guarantee", guarantee), zap.String("X-Eos-Push-Guarantee-Output-Inline-Traces", pushOutput))
-	}
-
 	ctx := r.Context()
 
 	eosws.TrackUserEvent(ctx, "rest_request",
@@ -230,6 +226,11 @@ func (t *TxPusher) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		checkHTTPError(fmt.Errorf(msg), msg, eoserr.ErrUnhandledException, w)
 		return
 	}
+
+	if os.Getenv("DFUSE_LOG_HEADER") == "true" {
+		zlog.Info("logging header", zap.String("X-Eos-Push-Guarantee", guarantee), zap.String("X-Eos-Push-Guarantee-Output-Inline-Traces", pushOutput))
+	}
+
 	metrics.IncListeners("push_transaction")
 	metrics.PushTrxCount.Inc(normalizedGuarantee)
 	defer metrics.CurrentListeners.Dec("push_transaction")
