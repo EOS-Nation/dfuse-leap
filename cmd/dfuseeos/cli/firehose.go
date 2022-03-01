@@ -5,19 +5,19 @@ import (
 	"strings"
 	"time"
 
-	"github.com/dfuse-io/dfuse-eosio/filtering"
-	pbcodec "github.com/dfuse-io/dfuse-eosio/pb/dfuse/eosio/codec/v1"
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	"github.com/streamingfast/bstream"
 	blockstreamv2 "github.com/streamingfast/bstream/blockstream/v2"
+	"github.com/dfuse-io/dfuse-eosio/filtering"
+	pbcodec "github.com/dfuse-io/dfuse-eosio/pb/dfuse/eosio/codec/v1"
+	"github.com/streamingfast/dmetrics"
+	"github.com/streamingfast/logging"
+	pbbstream "github.com/streamingfast/pbgo/dfuse/bstream/v1"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	dauthAuthenticator "github.com/streamingfast/dauth/authenticator"
 	"github.com/streamingfast/dlauncher/launcher"
 	"github.com/streamingfast/dmetering"
-	"github.com/streamingfast/dmetrics"
 	firehoseApp "github.com/streamingfast/firehose/app/firehose"
-	"github.com/streamingfast/logging"
-	pbbstream "github.com/streamingfast/pbgo/dfuse/bstream/v1"
 	"go.uber.org/zap"
 )
 
@@ -36,6 +36,7 @@ func init() {
 		MetricsID:   "merged-filter",
 		Logger:      launcher.NewLoggingDef("github.com/dfuse-io/dfuse-eosio/firehose.*", nil),
 		RegisterFlags: func(cmd *cobra.Command) error {
+			cmd.Flags().String("common-network-name", "", "Common network name such as eos, wax, ...")
 			cmd.Flags().String("firehose-grpc-listen-addr", FirehoseGRPCServingAddr+"*", "Address on which the firehose will listen")
 			cmd.Flags().StringSlice("firehose-blocks-store-urls", nil, "If non-empty, overrides common-blocks-store-url with a list of blocks stores")
 			return nil
@@ -91,11 +92,22 @@ func init() {
 				return preproc.PreprocessBlock, nil
 			}
 
+			firehoseGRPCListenAddr := viper.GetString("firehose-grpc-listen-addr")
+			if !strings.Contains(firehoseGRPCListenAddr, "*") {
+				return nil, fmt.Errorf("unsupported value for firehose-grpc-listen-addr. Address must include '*' character to indicate TLS with snakeoil (insecure) certificate")
+			}
+
+			networkName := viper.GetString("common-network-name")
+			if networkName == "" {
+				return nil, fmt.Errorf("missing common-network-name")
+			}
+
 			return firehoseApp.New(appLogger, &firehoseApp.Config{
 				BlockStoreURLs:          firehoseBlocksStoreURLs,
 				BlockStreamAddr:         blockstreamAddr,
-				GRPCListenAddr:          viper.GetString("firehose-grpc-listen-addr"),
+				GRPCListenAddr:          firehoseGRPCListenAddr,
 				GRPCShutdownGracePeriod: grcpShutdownGracePeriod,
+				Network:                 networkName,
 			}, &firehoseApp.Modules{
 				Authenticator:             authenticator,
 				BlockTrimmer:              blockstreamv2.BlockTrimmerFunc(trimBlock),
