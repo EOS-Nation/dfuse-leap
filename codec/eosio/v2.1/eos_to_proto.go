@@ -2,13 +2,14 @@ package eosio
 
 import (
 	"fmt"
+	"github.com/eoscanada/eos-go"
+	"github.com/eoscanada/eos-go/ecc"
 	"math"
 	"sort"
 	"time"
 
 	"github.com/dfuse-io/dfuse-eosio/codec/eosio"
 	pbcodec "github.com/dfuse-io/dfuse-eosio/pb/dfuse/eosio/codec/v1"
-	"github.com/eoscanada/eos-go"
 	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/timestamp"
 	"go.uber.org/zap"
@@ -16,23 +17,19 @@ import (
 
 func TransactionReceiptToDEOS(txReceipt *TransactionReceipt) *pbcodec.TransactionReceipt {
 	receipt := &pbcodec.TransactionReceipt{
-		Status:               eosio.TransactionStatusToDEOS(txReceipt.Status),
+		Status:               TransactionStatusToDEOS(txReceipt.Status),
 		CpuUsageMicroSeconds: txReceipt.CPUUsageMicroSeconds,
 		NetUsageWords:        uint32(txReceipt.NetUsageWords),
 	}
 
-	switch txReceipt.Transaction.TypeID {
-	case TransactionVariant.TypeID("transaction_id"):
-		receipt.Id = txReceipt.Transaction.Impl.(eos.Checksum256).String()
-
-	case TransactionVariant.TypeID("packed_transaction"):
-		packed := txReceipt.Transaction.Impl.(*PackedTransaction)
-
-		receipt.PackedTransaction = PackedTransactionToDEOS(packed)
-
-	default:
-		id, name, _ := txReceipt.Transaction.Obtain(TransactionVariant)
-		panic(fmt.Errorf("Transaction variant %q (%d) is unknown", name, id))
+	receipt.Id = txReceipt.Transaction.ID.String()
+	if txReceipt.Transaction.Packed != nil {
+		receipt.PackedTransaction = &pbcodec.PackedTransaction{
+			Signatures:            SignaturesToDEOS(txReceipt.Transaction.Packed.Signatures),
+			Compression:           uint32(txReceipt.Transaction.Packed.Compression),
+			PackedContextFreeData: txReceipt.Transaction.Packed.PackedContextFreeData,
+			PackedTransaction:     txReceipt.Transaction.Packed.PackedTransaction,
+		}
 	}
 
 	return receipt
@@ -200,6 +197,31 @@ func AccountRAMDeltasToDEOS(deltas []AccountDelta) (out []*pbcodec.AccountRAMDel
 			Account: string(delta.Account),
 			Delta:   int64(delta.Delta),
 		}
+	}
+	return
+}
+
+func TransactionStatusToDEOS(in eos.TransactionStatus) pbcodec.TransactionStatus {
+	switch in {
+	case eos.TransactionStatusExecuted:
+		return pbcodec.TransactionStatus_TRANSACTIONSTATUS_EXECUTED
+	case eos.TransactionStatusSoftFail:
+		return pbcodec.TransactionStatus_TRANSACTIONSTATUS_SOFTFAIL
+	case eos.TransactionStatusHardFail:
+		return pbcodec.TransactionStatus_TRANSACTIONSTATUS_HARDFAIL
+	case eos.TransactionStatusDelayed:
+		return pbcodec.TransactionStatus_TRANSACTIONSTATUS_DELAYED
+	case eos.TransactionStatusExpired:
+		return pbcodec.TransactionStatus_TRANSACTIONSTATUS_EXPIRED
+	default:
+		return pbcodec.TransactionStatus_TRANSACTIONSTATUS_UNKNOWN
+	}
+}
+
+func SignaturesToDEOS(in []ecc.Signature) (out []string) {
+	out = make([]string, len(in))
+	for i, signature := range in {
+		out[i] = signature.String()
 	}
 	return
 }

@@ -103,7 +103,7 @@ type AccountDelta struct {
 
 type TransactionReceipt struct {
 	eos.TransactionReceiptHeader
-	Transaction Transaction `json:"trx"`
+	Transaction eos.TransactionWithID `json:"trx"`
 }
 
 var TransactionVariant = eos.NewVariantDefinition([]eos.VariantType{
