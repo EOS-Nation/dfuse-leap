@@ -89,9 +89,9 @@ type ActionTrace struct {
 	ProducerBlockID                        eos.Checksum256         `json:"producer_block_id" eos:"optional"`
 	AccountRAMDeltas                       []AccountDelta          `json:"account_ram_deltas"`
 	// Added in 2.1.x
-	AccountDiskDeltas []AccountDelta `json:"account_disk_deltas"`
-	Except            *eos.Except    `json:"except,omitempty" eos:"optional"`
-	ErrorCode         *eos.Uint64    `json:"error_code,omitempty" eos:"optional"`
+	// AccountDiskDeltas []AccountDelta `json:"account_disk_deltas"`
+	Except    *eos.Except `json:"except,omitempty" eos:"optional"`
+	ErrorCode *eos.Uint64 `json:"error_code,omitempty" eos:"optional"`
 	// Added in 2.1.x
 	ReturnValue eos.HexBytes `json:"return_value"`
 }
