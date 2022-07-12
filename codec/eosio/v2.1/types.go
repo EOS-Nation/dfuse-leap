@@ -33,7 +33,7 @@ type BlockState struct {
 	// From 'struct block_state'
 	// Type changed in v2.1.x
 	SignedBlock *SignedBlock `json:"block,omitempty" eos:"optional"`
-	Validated   bool         `json:"validated"`
+	// Validated   bool         `json:"validated"`
 }
 
 // BlockState
