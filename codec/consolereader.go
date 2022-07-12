@@ -1042,18 +1042,30 @@ func normalizeRAMOpAction(input string) string {
 //  Version 13
 //    DEEP_MIND_VERSION ${major_version} ${minor_version}
 func (ctx *parseCtx) readDeepmindVersion(line string) (majorVersion uint64, minorVersion uint64, hydrator eosio.Hydrator, err error) {
-	chunks, err := splitNToM(line, 2, 3)
+	chunks, err := splitNToM(line, 2, 4)
 	if err != nil {
 		return 0, 0, nil, err
 	}
 
-	majorVersion, err = strconv.ParseUint(chunks[1], 10, 64)
-	if err != nil {
-		return majorVersion, minorVersion, nil, fmt.Errorf("invalid major version %q: %w", chunks[1], err)
+	if len(chunks) < 4 {
+		majorVersion, err = strconv.ParseUint(chunks[1], 10, 64)
+		if err != nil {
+			return majorVersion, minorVersion, nil, fmt.Errorf("invalid major version %q: %w", chunks[1], err)
+		}
+	} else {
+		majorVersion, err = strconv.ParseUint(chunks[2], 10, 64)
+		if err != nil {
+			return majorVersion, minorVersion, nil, fmt.Errorf("invalid major version %q: %w", chunks[1], err)
+		}
 	}
 
 	if len(chunks) == 3 {
 		minorVersion, err = strconv.ParseUint(chunks[2], 10, 64)
+		if err != nil {
+			return majorVersion, minorVersion, nil, fmt.Errorf("invalid minor version %q: %w", chunks[2], err)
+		}
+	} else if len(chunks) == 4 {
+		minorVersion, err = strconv.ParseUint(chunks[3], 10, 64)
 		if err != nil {
 			return majorVersion, minorVersion, nil, fmt.Errorf("invalid minor version %q: %w", chunks[2], err)
 		}
