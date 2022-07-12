@@ -43,7 +43,7 @@ type BlockState struct {
 type SignedBlock struct {
 	eos.SignedBlockHeader
 	// Added in v2.1.x
-	PruneState uint8 `json:"prune_state"`
+	// PruneState uint8 `json:"prune_state"`
 	// Type changed in v2.1.x
 	Transactions    []*TransactionReceipt `json:"transactions"`
 	BlockExtensions []*eos.Extension      `json:"block_extensions"`
