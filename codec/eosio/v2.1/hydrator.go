@@ -39,7 +39,7 @@ func (h *Hydrator) HydrateBlock(block *pbcodec.Block, input []byte) error {
 	block.BlockExtensions = eosio.ExtensionsToDEOS(signedBlock.BlockExtensions)
 	block.DposIrreversibleBlocknum = blockState.DPoSIrreversibleBlockNum
 	block.DposProposedIrreversibleBlocknum = blockState.DPoSProposedIrreversibleBlockNum
-	block.Validated = blockState.Validated
+	// block.Validated = blockState.Validated
 	block.BlockrootMerkle = eosio.BlockrootMerkleToDEOS(blockState.BlockrootMerkle)
 	block.ProducerToLastProduced = eosio.ProducerToLastProducedToDEOS(blockState.ProducerToLastProduced)
 	block.ProducerToLastImpliedIrb = eosio.ProducerToLastImpliedIrbToDEOS(blockState.ProducerToLastImpliedIRB)
