@@ -85,7 +85,7 @@ func TestParseFromFile(t *testing.T) {
 		readerOptions []ConsoleReaderOption
 	}{
 		{"full", "testdata/deep-mind.dmlog", nil, nil},
-		{"full-2.1.x", "testdata/deep-mind-2.1.x.dmlog", nil, nil},
+		{"full-3.1.x", "testdata/deep-mind-3.1.x.dmlog", nil, nil},
 		{"max-console-log", "testdata/deep-mind.dmlog", blockWithConsole, []ConsoleReaderOption{LimitConsoleLength(10)}},
 	}
 
