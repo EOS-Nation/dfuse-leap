@@ -72,10 +72,11 @@ type ConsoleReader struct {
 }
 
 // TODO: At some point, the interface of a ConsoleReader should be re-done.
-//       Indeed, the `ConsoleReader` could simply receive each line already split
-//       since the upstream caller is already doing this job it self. This way, we
-//       would have a single split job instead of two. Only the upstream would split
-//       the line and the console reader would simply process each line, one at a time.
+//
+//	Indeed, the `ConsoleReader` could simply receive each line already split
+//	since the upstream caller is already doing this job it self. This way, we
+//	would have a single split job instead of two. Only the upstream would split
+//	the line and the console reader would simply process each line, one at a time.
 func NewConsoleReader(reader io.Reader, opts ...ConsoleReaderOption) (*ConsoleReader, error) {
 	l := &ConsoleReader{
 		src:   reader,
@@ -439,7 +440,8 @@ func (ctx *parseCtx) transferDeferredRemovedRAMOp(initialRAMOps []*pbcodec.RAMOp
 }
 
 // Line format:
-//   START_BLOCK ${block_num}
+//
+//	START_BLOCK ${block_num}
 func (ctx *parseCtx) readStartBlock(line string) error {
 	chunks := strings.Split(line, " ")
 	if len(chunks) != 2 {
@@ -462,7 +464,8 @@ func (ctx *parseCtx) readStartBlock(line string) error {
 }
 
 // Line format:
-//   ACCEPTED_BLOCK ${block_num} ${block_state_hex}
+//
+//	ACCEPTED_BLOCK ${block_num} ${block_state_hex}
 func (ctx *parseCtx) readAcceptedBlock(line string) (*pbcodec.Block, error) {
 	chunks := strings.SplitN(line, " ", 3)
 	if len(chunks) != 3 {
@@ -501,7 +504,8 @@ func (ctx *parseCtx) readAcceptedBlock(line string) (*pbcodec.Block, error) {
 }
 
 // Line format:
-//   APPLIED_TRANSACTION ${block_num} ${trace_hex}
+//
+//	APPLIED_TRANSACTION ${block_num} ${trace_hex}
 func (ctx *parseCtx) readAppliedTransaction(line string) error {
 	chunks := strings.SplitN(line, " ", 3)
 	if len(chunks) != 3 {
@@ -531,10 +535,11 @@ func (ctx *parseCtx) readAppliedTransaction(line string) error {
 }
 
 // Line formats:
-//  CREATION_OP ROOT ${action_id}
-//  CREATION_OP NOTIFY ${action_id}
-//  CREATION_OP INLINE ${action_id}
-//  CREATION_OP CFA_INLINE ${action_id}
+//
+//	CREATION_OP ROOT ${action_id}
+//	CREATION_OP NOTIFY ${action_id}
+//	CREATION_OP INLINE ${action_id}
+//	CREATION_OP CFA_INLINE ${action_id}
 func (ctx *parseCtx) readCreationOp(line string) error {
 	chunks := strings.SplitN(line, " ", 3)
 	if len(chunks) != 3 {
@@ -564,9 +569,10 @@ func (ctx *parseCtx) readCreationOp(line string) error {
 }
 
 // Line formats:
-//   DB_OP INS ${action_id} ${payer} ${table_code} ${scope} ${table_name} ${primkey} ${ndata}
-//   DB_OP UPD ${action_id} ${opayer}:${npayer} ${table_code} ${scope} ${table_name} ${primkey} ${odata}:${ndata}
-//   DB_OP REM ${action_id} ${payer} ${table_code} ${scope} ${table_name} ${primkey} ${odata}
+//
+//	DB_OP INS ${action_id} ${payer} ${table_code} ${scope} ${table_name} ${primkey} ${ndata}
+//	DB_OP UPD ${action_id} ${opayer}:${npayer} ${table_code} ${scope} ${table_name} ${primkey} ${odata}:${ndata}
+//	DB_OP REM ${action_id} ${payer} ${table_code} ${scope} ${table_name} ${primkey} ${odata}
 func (ctx *parseCtx) readDBOp(line string) error {
 	chunks := strings.SplitN(line, " ", 9)
 	if len(chunks) != 9 {
@@ -646,9 +652,10 @@ func (ctx *parseCtx) readDBOp(line string) error {
 }
 
 // Line formats:
-//   KV_OP INS ${action_id} ${code} ${npayer} ${key} ${ndata}
-//   KV_OP UPD ${action_id} ${code} ${npayer} ${key} ${odata}:${ndata}
-//   KV_OP REM ${action_id} ${code} ${opayer} ${key} ${odata}
+//
+//	KV_OP INS ${action_id} ${code} ${npayer} ${key} ${ndata}
+//	KV_OP UPD ${action_id} ${code} ${npayer} ${key} ${odata}:${ndata}
+//	KV_OP REM ${action_id} ${code} ${opayer} ${key} ${odata}
 //
 // **Note** Added in deep mind log version 13
 func (ctx *parseCtx) readKVOp(line string) error {
@@ -737,11 +744,12 @@ func (ctx *parseCtx) readKVOp(line string) error {
 }
 
 // Line formats:
-//   DTRX_OP MODIFY_CANCEL ${action_id} ${sender} ${sender_id} ${payer} ${published} ${delay} ${expiration} ${trx_id} ${trx}
-//   DTRX_OP MODIFY_CREATE ${action_id} ${sender} ${sender_id} ${payer} ${published} ${delay} ${expiration} ${trx_id} ${trx}
-//   DTRX_OP CREATE        ${action_id} ${sender} ${sender_id} ${payer} ${published} ${delay} ${expiration} ${trx_id} ${trx}
-//   DTRX_OP CANCEL        ${action_id} ${sender} ${sender_id} ${payer} ${published} ${delay} ${expiration} ${trx_id} ${trx}
-//   DTRX_OP PUSH_CREATE   ${action_id} ${sender} ${sender_id} ${payer} ${published} ${delay} ${expiration} ${trx_id} ${trx}
+//
+//	DTRX_OP MODIFY_CANCEL ${action_id} ${sender} ${sender_id} ${payer} ${published} ${delay} ${expiration} ${trx_id} ${trx}
+//	DTRX_OP MODIFY_CREATE ${action_id} ${sender} ${sender_id} ${payer} ${published} ${delay} ${expiration} ${trx_id} ${trx}
+//	DTRX_OP CREATE        ${action_id} ${sender} ${sender_id} ${payer} ${published} ${delay} ${expiration} ${trx_id} ${trx}
+//	DTRX_OP CANCEL        ${action_id} ${sender} ${sender_id} ${payer} ${published} ${delay} ${expiration} ${trx_id} ${trx}
+//	DTRX_OP PUSH_CREATE   ${action_id} ${sender} ${sender_id} ${payer} ${published} ${delay} ${expiration} ${trx_id} ${trx}
 func (ctx *parseCtx) readCreateOrCancelDTrxOp(tag string, line string) error {
 	chunks := strings.SplitN(line, " ", 11)
 	if len(chunks) != 11 {
@@ -802,7 +810,8 @@ func (ctx *parseCtx) readCreateOrCancelDTrxOp(tag string, line string) error {
 }
 
 // Line format:
-//   DTRX_OP FAILED ${action_id}
+//
+//	DTRX_OP FAILED ${action_id}
 func (ctx *parseCtx) readFailedDTrxOp(line string) error {
 	chunks := strings.SplitN(line, " ", 3)
 	if len(chunks) != 3 {
@@ -823,7 +832,8 @@ func (ctx *parseCtx) readFailedDTrxOp(line string) error {
 }
 
 // Line formats:
-//   FEATURE_OP ACTIVATE ${feature_digest} ${feature}
+//
+//	FEATURE_OP ACTIVATE ${feature_digest} ${feature}
 func (ctx *parseCtx) readFeatureOpActivate(line string) error {
 	chunks := strings.SplitN(line, " ", 4)
 	if len(chunks) != 4 {
@@ -846,7 +856,8 @@ func (ctx *parseCtx) readFeatureOpActivate(line string) error {
 }
 
 // Line formats:
-//   FEATURE_OP PRE_ACTIVATE ${action_id} ${feature_digest} ${feature}
+//
+//	FEATURE_OP PRE_ACTIVATE ${action_id} ${feature_digest} ${feature}
 func (ctx *parseCtx) readFeatureOpPreActivate(line string) error {
 	chunks := strings.SplitN(line, " ", 5)
 	if len(chunks) != 5 {
@@ -874,9 +885,10 @@ func (ctx *parseCtx) readFeatureOpPreActivate(line string) error {
 }
 
 // Line formats: (the `[...]` represents optional fields)
-//   PERM_OP INS ${action_id} [${permission_id}] ${data}
-//   PERM_OP UPD ${action_id} [${permission_id}] ${data}
-//   PERM_OP REM ${action_id} [${permission_id}] ${data} <-- {"old": <old>, "new": <new>}
+//
+//	PERM_OP INS ${action_id} [${permission_id}] ${data}
+//	PERM_OP UPD ${action_id} [${permission_id}] ${data}
+//	PERM_OP REM ${action_id} [${permission_id}] ${data} <-- {"old": <old>, "new": <new>}
 func (ctx *parseCtx) readPermOp(line string) error {
 	chunks, err := splitNToM(line, 4, 5)
 	if err != nil {
@@ -968,7 +980,8 @@ func (ctx *parseCtx) readPermOp(line string) error {
 }
 
 // Line format:
-//   RAM_OP ${action_index} ${unique_key} ${namespace} ${action} ${legacy_tag} ${payer} ${new_usage} ${delta}
+//
+//	RAM_OP ${action_index} ${unique_key} ${namespace} ${action} ${legacy_tag} ${payer} ${new_usage} ${delta}
 func (ctx *parseCtx) readRAMOp(line string) error {
 	chunks := strings.SplitN(line, " ", 9)
 	if len(chunks) != 9 {
@@ -1036,36 +1049,25 @@ func normalizeRAMOpAction(input string) string {
 }
 
 // Line format:
-//  Version 12
-//    DEEP_MIND_VERSION ${major_version}
 //
-//  Version 13
-//    DEEP_MIND_VERSION ${major_version} ${minor_version}
+//	Version 12
+//	  DEEP_MIND_VERSION ${major_version}
+//
+//	Version 13
+//	  DEEP_MIND_VERSION ${major_version} ${minor_version}
 func (ctx *parseCtx) readDeepmindVersion(line string) (majorVersion uint64, minorVersion uint64, hydrator eosio.Hydrator, err error) {
-	chunks, err := splitNToM(line, 2, 4)
+	chunks, err := splitNToM(line, 2, 3)
 	if err != nil {
 		return 0, 0, nil, err
 	}
 
-	if len(chunks) < 4 {
-		majorVersion, err = strconv.ParseUint(chunks[1], 10, 64)
-		if err != nil {
-			return majorVersion, minorVersion, nil, fmt.Errorf("invalid major version %q: %w", chunks[1], err)
-		}
-	} else {
-		majorVersion, err = strconv.ParseUint(chunks[2], 10, 64)
-		if err != nil {
-			return majorVersion, minorVersion, nil, fmt.Errorf("invalid major version %q: %w", chunks[1], err)
-		}
+	majorVersion, err = strconv.ParseUint(chunks[1], 10, 64)
+	if err != nil {
+		return majorVersion, minorVersion, nil, fmt.Errorf("invalid major version %q: %w", chunks[1], err)
 	}
 
 	if len(chunks) == 3 {
 		minorVersion, err = strconv.ParseUint(chunks[2], 10, 64)
-		if err != nil {
-			return majorVersion, minorVersion, nil, fmt.Errorf("invalid minor version %q: %w", chunks[2], err)
-		}
-	} else if len(chunks) == 4 {
-		minorVersion, err = strconv.ParseUint(chunks[3], 10, 64)
 		if err != nil {
 			return majorVersion, minorVersion, nil, fmt.Errorf("invalid minor version %q: %w", chunks[2], err)
 		}
@@ -1094,11 +1096,12 @@ func inSupportedVersion(majorVersion uint64) bool {
 }
 
 // Line format:
-//  Version 12
-//    ABIDUMP START
 //
-//  Version 13
-//    ABIDUMP START ${block_num} ${global_sequence_num}
+//	Version 12
+//	  ABIDUMP START
+//
+//	Version 13
+//	  ABIDUMP START ${block_num} ${global_sequence_num}
 func (ctx *parseCtx) readABIStart(line string) error {
 	chunks := strings.SplitN(line, " ", -1)
 
@@ -1128,11 +1131,12 @@ func (ctx *parseCtx) readABIStart(line string) error {
 }
 
 // Line format:
-//  Version 12
-//    ABIDUMP ABI ${block_num} ${contract} ${base64_abi}
 //
-//  Version 13
-//    ABIDUMP ABI ${contract} ${base64_abi}
+//	Version 12
+//	  ABIDUMP ABI ${block_num} ${contract} ${base64_abi}
+//
+//	Version 13
+//	  ABIDUMP ABI ${contract} ${base64_abi}
 func (ctx *parseCtx) readABIDump(line string) error {
 	chunks, err := splitNToM(line, 4, 5)
 	if err != nil {
@@ -1158,7 +1162,8 @@ func (ctx *parseCtx) readABIDump(line string) error {
 }
 
 // Line format:
-//   RAM_CORRECTION_OP ${action_id} ${correction_id} ${unique_key} ${payer} ${delta}
+//
+//	RAM_CORRECTION_OP ${action_id} ${correction_id} ${unique_key} ${payer} ${delta}
 func (ctx *parseCtx) readRAMCorrectionOp(line string) error {
 	chunks := strings.SplitN(line, " ", 6)
 	if len(chunks) != 6 {
@@ -1182,14 +1187,15 @@ func (ctx *parseCtx) readRAMCorrectionOp(line string) error {
 }
 
 // Line formats:
-//   RLIMIT_OP CONFIG         INS ${data}
-//   RLIMIT_OP CONFIG         UPD ${data}
-//   RLIMIT_OP STATE          INS ${data}
-//   RLIMIT_OP STATE          UPD ${data}
-//   RLIMIT_OP ACCOUNT_LIMITS INS ${data}
-//   RLIMIT_OP ACCOUNT_LIMITS UPD ${data}
-//   RLIMIT_OP ACCOUNT_USAGE  INS ${data}
-//   RLIMIT_OP ACCOUNT_USAGE  UPD ${data}
+//
+//	RLIMIT_OP CONFIG         INS ${data}
+//	RLIMIT_OP CONFIG         UPD ${data}
+//	RLIMIT_OP STATE          INS ${data}
+//	RLIMIT_OP STATE          UPD ${data}
+//	RLIMIT_OP ACCOUNT_LIMITS INS ${data}
+//	RLIMIT_OP ACCOUNT_LIMITS UPD ${data}
+//	RLIMIT_OP ACCOUNT_USAGE  INS ${data}
+//	RLIMIT_OP ACCOUNT_USAGE  UPD ${data}
 func (ctx *parseCtx) readRlimitOp(line string) error {
 	chunks := strings.SplitN(line, " ", 4)
 	if len(chunks) != 4 {
@@ -1259,8 +1265,9 @@ func (ctx *parseCtx) readRlimitOp(line string) error {
 }
 
 // Line formats:
-//   TBL_OP INS ${action_id} ${code} ${scope} ${table} ${payer}
-//   TBL_OP REM ${action_id} ${code} ${scope} ${table} ${payer}
+//
+//	TBL_OP INS ${action_id} ${code} ${scope} ${table} ${payer}
+//	TBL_OP REM ${action_id} ${code} ${scope} ${table} ${payer}
 func (ctx *parseCtx) readTableOp(line string) error {
 	chunks := strings.SplitN(line, " ", 7)
 	if len(chunks) != 7 {
@@ -1296,7 +1303,8 @@ func (ctx *parseCtx) readTableOp(line string) error {
 }
 
 // Line formats:
-//   TRX_OP CREATE onblock|onerror ${id} ${trx}
+//
+//	TRX_OP CREATE onblock|onerror ${id} ${trx}
 func (ctx *parseCtx) readTrxOp(line string) error {
 	chunks := strings.SplitN(line, " ", 5)
 	if len(chunks) != 5 {
