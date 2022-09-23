@@ -17,10 +17,10 @@ package codec
 import (
 	"bytes"
 	"encoding/hex"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"os/exec"
@@ -78,21 +78,26 @@ func TestConsoleReaderPerformances(t *testing.T) {
 }
 
 func TestParseFromFile(t *testing.T) {
+
 	tests := []struct {
 		name          string
 		deepMindFile  string
 		includeBlock  func(block *pbcodec.Block) bool
 		readerOptions []ConsoleReaderOption
 	}{
-		{"full", "testdata/deep-mind.dmlog", nil, nil},
+		// {"full", "testdata/deep-mind.dmlog", nil, nil},
 		{"full-3.1.x", "testdata/deep-mind-3.1.x.dmlog", nil, nil},
-		{"max-console-log", "testdata/deep-mind.dmlog", blockWithConsole, []ConsoleReaderOption{LimitConsoleLength(10)}},
+		// {"max-console-log", "testdata/deep-mind.dmlog", blockWithConsole, []ConsoleReaderOption{LimitConsoleLength(10)}},
 	}
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
+
+			startTime := time.Now()
+
 			cr := testFileConsoleReader(t, test.deepMindFile, test.readerOptions...)
 			buf := &bytes.Buffer{}
+			blocks := []*pbcodec.Block{}
 
 			for {
 				out, err := cr.Read()
@@ -107,6 +112,7 @@ func TestParseFromFile(t *testing.T) {
 					}
 
 					buf.Write([]byte(protoJSONMarshalIndent(t, blk)))
+					blocks = append(blocks, blk)
 				}
 
 				if err == io.EOF {
@@ -123,17 +129,35 @@ func TestParseFromFile(t *testing.T) {
 				require.NoError(t, err)
 			}
 
-			goldenFile := filepath.Join("testdata", test.name+".golden.json")
-			if os.Getenv("GOLDEN_UPDATE") == "true" {
-				ioutil.WriteFile(goldenFile, buf.Bytes(), os.ModePerm)
-			}
+			t.Logf("read in deep mind, time: %d", time.Now().Sub(startTime))
+			startTime = time.Now()
 
-			cnt, err := ioutil.ReadFile(goldenFile)
+			res, err := json.Marshal(blocks)
 			require.NoError(t, err)
 
-			if !assert.Equal(t, string(cnt), buf.String()) {
+			goldenFile := filepath.Join("testdata", test.name+".golden.json")
+			if os.Getenv("GOLDEN_UPDATE") == "true" {
+				// err := os.WriteFile(goldenFile, buf.Bytes(), os.ModePerm)
+
+				err = os.WriteFile(goldenFile, res, os.ModePerm)
+				require.NoError(t, err)
+			}
+			cnt, err := os.ReadFile(goldenFile)
+			require.NoError(t, err)
+
+			//if !jsonEq(t, cnt, buf.Bytes()) {
+			//	t.Error("previous diff:\n" + unifiedDiff(t, cnt, buf.Bytes()))
+			//}
+			if string(cnt) != buf.String() {
 				t.Error("previous diff:\n" + unifiedDiff(t, cnt, buf.Bytes()))
 			}
+
+			//if !jsonEq(t, cnt, buf.Bytes()) {
+			//	t.Log("not equal")
+			//	// t.Error("previous diff:\n" + unifiedDiff(t, cnt, res))
+			//}
+
+			t.Logf("compared json files in: %d", time.Now().Sub(startTime))
 		})
 	}
 }
@@ -141,16 +165,29 @@ func TestParseFromFile(t *testing.T) {
 func unifiedDiff(t *testing.T, cnt1, cnt2 []byte) string {
 	file1 := "/tmp/gotests-linediff-1"
 	file2 := "/tmp/gotests-linediff-2"
-	err := ioutil.WriteFile(file1, cnt1, 0600)
+	err := os.WriteFile(file1, cnt1, 0600)
 	require.NoError(t, err)
 
-	err = ioutil.WriteFile(file2, cnt2, 0600)
+	err = os.WriteFile(file2, cnt2, 0600)
 	require.NoError(t, err)
 
 	cmd := exec.Command("diff", "-u", file1, file2)
 	out, _ := cmd.Output()
 
 	return string(out)
+}
+
+func jsonEq(t *testing.T, expected, actual []byte) bool {
+
+	var expectedJSONAsInterface, actualJSONAsInterface interface{}
+
+	err := json.Unmarshal(expected, &expectedJSONAsInterface)
+	require.NoError(t, err)
+
+	err = json.Unmarshal(actual, &actualJSONAsInterface)
+	require.NoError(t, err)
+
+	return assert.ObjectsAreEqualValues(expectedJSONAsInterface, actualJSONAsInterface)
 }
 
 func TestGeneratePBBlocks(t *testing.T) {
