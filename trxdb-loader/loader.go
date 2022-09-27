@@ -21,17 +21,17 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/streamingfast/bstream"
-	"github.com/streamingfast/bstream/blockstream"
-	"github.com/streamingfast/bstream/forkable"
 	pbcodec "github.com/dfuse-io/dfuse-eosio/pb/dfuse/eosio/codec/v1"
 	"github.com/dfuse-io/dfuse-eosio/trxdb"
 	"github.com/dfuse-io/dfuse-eosio/trxdb-loader/metrics"
+	eosgo "github.com/eoscanada/eos-go"
+	"github.com/streamingfast/bstream"
+	"github.com/streamingfast/bstream/blockstream"
+	"github.com/streamingfast/bstream/forkable"
 	"github.com/streamingfast/dstore"
+	"github.com/streamingfast/kvdb"
 	pbblockmeta "github.com/streamingfast/pbgo/dfuse/blockmeta/v1"
 	"github.com/streamingfast/shutter"
-	eosgo "github.com/eoscanada/eos-go"
-	"github.com/streamingfast/kvdb"
 	"go.uber.org/zap"
 )
 

@@ -7,7 +7,6 @@ import (
 	"github.com/eoscanada/eos-go"
 )
 
-//
 // CreationFlatTree represents the creation order tree
 // in a flatten manners. The flat list is built by doing
 // a deep-first walk of the creational tree, outputting
@@ -18,23 +17,26 @@ import (
 // For example, assuming a `CreationFlatTree` of the form:
 //
 // [
-//   [0, -1, 0],
-//   [1, 0, 1],
-//   [2, 0, 2],
-//   [3, 2, 3],
+//
+//	[0, -1, 0],
+//	[1, 0, 1],
+//	[2, 0, 2],
+//	[3, 2, 3],
+//
 // ]
 //
 // Represents the following creational tree:
 //
 // ```
-//   0
-//   ├── 1
-//   └── 2
-//       └── 3
+//
+//	0
+//	├── 1
+//	└── 2
+//	    └── 3
+//
 // ```
 //
 // The tree can be reconstructed using the following quick Python.
-//
 type CreationFlatTree = []CreationFlatNode
 
 // CreationFlatNode represents a flat node in a flat tree.
@@ -50,7 +52,6 @@ type CreationFlatTree = []CreationFlatNode
 // The third value is the execution action index to get the actual execution traces
 // from the actual execution tree (deep-first walking index in the execution
 // tree).
-//
 type CreationFlatNode = [3]int
 
 type ConversionOption interface{}

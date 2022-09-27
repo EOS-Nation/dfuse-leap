@@ -18,8 +18,8 @@ package eosws
 import (
 	"context"
 	"fmt"
-	"github.com/streamingfast/derr"
 	drateLimiter "github.com/streamingfast/dauth/ratelimiter"
+	"github.com/streamingfast/derr"
 	"net/http"
 	"net/url"
 	"strings"

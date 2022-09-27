@@ -397,7 +397,7 @@ func writeDetailedAPIError(err error, msg string, errorCode int, errorName, erro
 	apiError.ErrorStruct.Name = errorName
 	apiError.ErrorStruct.What = errorWhat
 	apiError.ErrorStruct.Details = []eos.APIErrorDetail{
-		eos.APIErrorDetail{
+		{
 			File:       "",
 			LineNumber: 0,
 			Message:    detailMessage,
