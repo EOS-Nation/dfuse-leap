@@ -38,8 +38,6 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get install -y go-bindata
-          go install github.com/GeertJohan/go.rice
-          go install github.com/GeertJohan/go.rice/rice
 
       - name: Run Unit tests.
         run: go test -v ./...
