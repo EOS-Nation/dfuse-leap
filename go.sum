@@ -102,6 +102,8 @@ github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802 h1:1BDTz0u9nC3//pOC
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/DataDog/zstd v1.4.1 h1:3oxKN3wbHibqx897utPC2LTQU4J+IHWWJO+glkAkpFM=
 github.com/DataDog/zstd v1.4.1/go.mod h1:1jcaCB/ufaK+sKp1NBhlGmpz41jOoPQ35bpF36t7BBo=
+github.com/EOS-Nation/dstore v0.0.0-20220908095022-20cd13d5dc4c h1:Tx3MDgdy4aKPoBAotXitGV+uQaMaG4dJlO2UXNMcd90=
+github.com/EOS-Nation/dstore v0.0.0-20220908095022-20cd13d5dc4c/go.mod h1:8o9B/vIwdInSkr4TfYFzEsWqfIRZfrLNRaOp4R6uk2M=
 github.com/EOS-Nation/firehose v0.1.1-0.20210818092903-e36da6ade581/go.mod h1:8UMnd4hxCNBQAmzsOLOPoWYWRZs79rdeI7QpCerKRqM=
 github.com/EOS-Nation/firehose v0.1.1-0.20210818200630-ccd1d285dbe5 h1:3R2zKftQxz9l7P58mxOUXIapGU7eKF21Qzn5mJ7k658=
 github.com/EOS-Nation/firehose v0.1.1-0.20210818200630-ccd1d285dbe5/go.mod h1:zyl6gNAxp7fRJH/Ue8XMMzogpad/Jx/Tcq7m8Kz1Uys=
@@ -1570,6 +1572,8 @@ golang.org/x/sys v0.0.0-20210806184541-e5e7981a1069 h1:siQdpVirKtzPhKl3lZWozZraC
 golang.org/x/sys v0.0.0-20210806184541-e5e7981a1069/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20220627191245-f75cf1eec38b h1:2n253B2r0pYSmEV+UNCQoPfU/FiaizQEK5Gu4Bq4JE8=
 golang.org/x/sys v0.0.0-20220627191245-f75cf1eec38b/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.0.0-20220907062415-87db552b00fd h1:AZeIEzg+8RCELJYq8w+ODLVxFgLMMigSwO/ffKPEd9U=
+golang.org/x/sys v0.0.0-20220907062415-87db552b00fd/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1/go.mod h1:bj7SfCRtBDWHUb9snDiAeCFNEtKQo2Wmx5Cou7ajbmo=
 golang.org/x/term v0.0.0-20201210144234-2321bbc49cbf h1:MZ2shdL+ZM/XzY3ZGOnh4Nlpnxz5GSOhOmtHo3iPU6M=
 golang.org/x/term v0.0.0-20201210144234-2321bbc49cbf/go.mod h1:bj7SfCRtBDWHUb9snDiAeCFNEtKQo2Wmx5Cou7ajbmo=
