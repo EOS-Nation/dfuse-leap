@@ -90,7 +90,7 @@ checks() {
     echo "The 'go' command (version 1.18+) is required to build a version locally, install it following https://golang.org/doc/install#install"
     found_error=true
   else
-    if ! (go version | grep -qE 'go1\.(1[456789]|[2-9][0-9]+)'); then
+    if ! (go version | grep -qE 'go1\.(1[89]|[2-9][0-9]+)'); then
       echo "Your 'go' version (`go version`) is too low, requires go 1.18+, if you think it's a mistake, use '-s' flag to skip checks"
       found_error=true
     fi
