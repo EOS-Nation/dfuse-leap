@@ -786,6 +786,18 @@ func Test_readDeepMindVersion(t *testing.T) {
 			nil,
 		},
 		{
+			"version 13.1",
+			`DEEP_MIND_VERSION leap 13 1`,
+			13, 1,
+			nil,
+		},
+		{
+			"version 13.1",
+			`DEEP_MIND_VERSION anythingisallowedhere 13 1`,
+			13, 1,
+			nil,
+		},
+		{
 			"version 13, unsupported",
 			`DEEP_MIND_VERSION 14 0`,
 			14, 0,
