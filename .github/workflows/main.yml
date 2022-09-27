@@ -43,7 +43,9 @@ jobs:
         run: go test -v ./...
 
       - name: Build dfuseeos
-        run: go build -o dfuseeos ./cmd/dfuseeos
+        run: |
+          go generate ./...
+          go build -o dfuseeos ./cmd/dfuseeos
 
-      - name: Run build script
-        run: ./scripts/build.sh -f -y
+#      - name: Run build script
+#        run: ./scripts/build.sh -f -y
