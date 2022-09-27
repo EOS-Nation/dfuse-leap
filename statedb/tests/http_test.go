@@ -29,13 +29,13 @@ import (
 	_ "github.com/dfuse-io/dfuse-eosio/codec"
 	_ "github.com/streamingfast/kvdb/store/badger"
 
-	"github.com/streamingfast/bstream"
 	ct "github.com/dfuse-io/dfuse-eosio/codec/testing"
 	pbcodec "github.com/dfuse-io/dfuse-eosio/pb/dfuse/eosio/codec/v1"
-	"github.com/streamingfast/logging"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/streamingfast/bstream"
 	"github.com/streamingfast/fluxdb/store"
 	fluxdbKV "github.com/streamingfast/fluxdb/store/kv"
+	"github.com/streamingfast/logging"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/zap"
 )

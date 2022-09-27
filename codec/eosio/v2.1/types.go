@@ -8,9 +8,9 @@ import (
 // BlockState
 //
 // File hierarchy:
-//  - https://github.com/EOSIO/eos/blob/v2.1.0/libraries/chain/include/eosio/chain/block_header_state.hpp#L57
-//  - https://github.com/EOSIO/eos/blob/v2.1.0/libraries/chain/include/eosio/chain/block_header_state.hpp#L126
-//  - https://github.com/EOSIO/eos/blob/v2.1.0/libraries/chain/include/eosio/chain/block_state.hpp#L10
+//   - https://github.com/EOSIO/eos/blob/v2.1.0/libraries/chain/include/eosio/chain/block_header_state.hpp#L57
+//   - https://github.com/EOSIO/eos/blob/v2.1.0/libraries/chain/include/eosio/chain/block_header_state.hpp#L126
+//   - https://github.com/EOSIO/eos/blob/v2.1.0/libraries/chain/include/eosio/chain/block_state.hpp#L10
 type BlockState struct {
 	// From 'struct block_header_state_common'
 	BlockNum                         uint32                         `json:"block_num"`
@@ -39,7 +39,7 @@ type BlockState struct {
 // BlockState
 //
 // File hierarchy:
-//  - https://github.com/EOSIO/eos/blob/v2.1.0/libraries/chain/include/eosio/chain/block.hpp#L135
+//   - https://github.com/EOSIO/eos/blob/v2.1.0/libraries/chain/include/eosio/chain/block.hpp#L135
 type SignedBlock struct {
 	eos.SignedBlockHeader
 	// Added in v2.1.x
@@ -52,7 +52,7 @@ type SignedBlock struct {
 // TransactionTrace
 //
 // File hierarchy:
-//  - https://github.com/EOSIO/eos/blob/v2.1.0/libraries/chain/include/eosio/chain/trace.hpp#L51
+//   - https://github.com/EOSIO/eos/blob/v2.1.0/libraries/chain/include/eosio/chain/trace.hpp#L51
 type TransactionTrace struct {
 	ID              eos.Checksum256               `json:"id"`
 	BlockNum        uint32                        `json:"block_num"`
@@ -72,7 +72,7 @@ type TransactionTrace struct {
 // TransactionTrace
 //
 // File hierarchy:
-//  - https://github.com/EOSIO/eos/blob/v2.1.0/libraries/chain/include/eosio/chain/trace.hpp#L22
+//   - https://github.com/EOSIO/eos/blob/v2.1.0/libraries/chain/include/eosio/chain/trace.hpp#L22
 type ActionTrace struct {
 	ActionOrdinal                          eos.Varuint32           `json:"action_ordinal"`
 	CreatorActionOrdinal                   eos.Varuint32           `json:"creator_action_ordinal"`

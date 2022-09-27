@@ -1415,7 +1415,6 @@ func (m *ProducerAuthority) GetBlockSigningAuthority() *BlockSigningAuthority {
 //
 // Know current types (and version they were introduced):
 // - `BlockSigningAuthorityV0` [Type 0] (EOSIO 2.0)
-//
 type BlockSigningAuthority struct {
 	// Types that are valid to be assigned to Variant:
 	//	*BlockSigningAuthority_V0

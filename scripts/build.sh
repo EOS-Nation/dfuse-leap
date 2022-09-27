@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
 
@@ -36,31 +37,32 @@ main() {
 build() {
   if [[ ! -d eosq/eosq-build || $force_build == true ]]; then
     pushd eosq > /dev/null
-      echo "Building eosq"
+      echo "** Building eosq **"
       yarn install && yarn build
     popd > /dev/null
   fi
 
+  echo "** Building dlauncher **"
   dlauncher_hash=`grep -w github.com/streamingfast/dlauncher go.mod | sed 's/.*-\([a-f0-9]*$\)/\1/' | head -n 1`
   pushd .. > /dev/null
     if [[ ! -d dlauncher ]]; then
-      echo "Cloning dlauncher dependency"
-      git clone https://github.com/streamingfast/dlauncher
-      git checkout $dlauncher_hash
+      echo "** Cloning dlauncher dependency **"
+      git clone https://github.com/streamingfast/dlauncher.git
     elif [[ $force_build == true ]]; then
       pushd dlauncher > /dev/null
+        git checkout develop
         git pull
         git checkout $dlauncher_hash
       popd > /dev/null
     fi
     pushd dlauncher
-      git checkout $DLAUNCHER
+      git checkout $dlauncher_hash
     popd >/dev/null
 
     if [[ ! -d dlauncher/dashboard/dashboard-build || $force_build == true ]]; then
       pushd dlauncher/dashboard > /dev/null
         pushd client > /dev/null
-          echo "Building dashboard"
+          echo "** Building dashboard **"
           yarn install && yarn build
         popd > /dev/null
 
@@ -70,14 +72,14 @@ build() {
   popd > /dev/null
 
   if [[ $force_build == true ]]; then
-    echo "Generating static assets"
+    echo "** Generating static assets **"
     go generate ./...
   fi
 
   if ! [[ $prepare_only == true ]]; then
     GIT_COMMIT="$(git describe --match=NeVeRmAtCh --always --abbrev=7 --dirty)"
 
-    echo "Building & installing dfuseeos binary for $GIT_COMMIT"
+    echo "** Building & installing dfuseeos binary for $GIT_COMMIT **"
     go install -ldflags "-X main.commit=$GIT_COMMIT" ./cmd/dfuseeos
   fi
 }
@@ -85,11 +87,11 @@ build() {
 checks() {
   found_error=
   if ! command -v go &> /dev/null; then
-    echo "The 'go' command (version 1.14+) is required to build a version locally, install it following https://golang.org/doc/install#install"
+    echo "The 'go' command (version 1.18+) is required to build a version locally, install it following https://golang.org/doc/install#install"
     found_error=true
   else
-    if ! (go version | grep -qE 'go1\.(1[456789]|[2-9][0-9]+)'); then
-      echo "Your 'go' version (`go version`) is too low, requires go 1.14+, if you think it's a mistake, use '-s' flag to skip checks"
+    if ! (go version | grep -qE 'go1\.(1[89]|[2-9][0-9]+)'); then
+      echo "Your 'go' version (`go version`) is too low, requires go 1.18+, if you think it's a mistake, use '-s' flag to skip checks"
       found_error=true
     fi
   fi
@@ -119,11 +121,9 @@ checks() {
 
     if [[ $install_rice == true ]]; then
       pushd /tmp > /dev/null
-        set -e
         echo "Installing 'rice' executable"
-        go get github.com/GeertJohan/go.rice
-        go get github.com/GeertJohan/go.rice/rice
-        set +e
+        go install github.com/GeertJohan/go.rice@latest
+        go install github.com/GeertJohan/go.rice/rice@latest
       popd > /dev/null
     else
       echo "The 'rice' executable is required to build a version locally, install it following https://github.com/GeertJohan/go.rice#installation"
