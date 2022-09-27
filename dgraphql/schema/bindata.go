@@ -281,7 +281,7 @@ func transactionsGraphql() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "transactions.graphql", size: 17007, mode: os.FileMode(420), modTime: time.Unix(1615209342, 0)}
+	info := bindataFileInfo{name: "transactions.graphql", size: 17007, mode: os.FileMode(420), modTime: time.Unix(1664282213, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
