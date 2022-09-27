@@ -35,17 +35,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
+      - name: Install dependencies
+        run: |
+          sudo apt-get install -y go-bindata
+          go install github.com/GeertJohan/go.rice
+          go install github.com/GeertJohan/go.rice/rice
+
       - name: Run Unit tests.
         run: go test -v ./...
 
       - name: Build dfuseeos
         run: go build -o dfuseeos ./cmd/dfuseeos
-
-      - name: Install dependencies
-        run: |
-          go install github.com/GeertJohan/go.rice
-          go install github.com/GeertJohan/go.rice/rice
-          sudo apt-get install -y go-bindata
 
       - name: Run build script
         run: ./scripts/build.sh -f -y
