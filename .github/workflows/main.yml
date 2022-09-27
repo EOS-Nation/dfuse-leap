@@ -39,4 +39,4 @@ jobs:
         run: go build -o dfuseeos ./cmd/dfuseeos
 
       - name: Run build script
-        run: ./scripts/build.sh
+        run: ./scripts/build.sh -y
