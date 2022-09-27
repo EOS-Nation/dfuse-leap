@@ -43,8 +43,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          go install github.com/GeertJohan/go.rice@latest
-          go install github.com/GeertJohan/go.rice/rice@latest
+          go install github.com/GeertJohan/go.rice
+          go install github.com/GeertJohan/go.rice/rice
+          sudo apt-get install -y go-bindata
 
       - name: Run build script
         run: ./scripts/build.sh -f -y

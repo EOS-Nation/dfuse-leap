@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
 
@@ -120,11 +121,9 @@ checks() {
 
     if [[ $install_rice == true ]]; then
       pushd /tmp > /dev/null
-        set -e
         echo "Installing 'rice' executable"
         go install github.com/GeertJohan/go.rice@latest
         go install github.com/GeertJohan/go.rice/rice@latest
-        set +e
       popd > /dev/null
     else
       echo "The 'rice' executable is required to build a version locally, install it following https://github.com/GeertJohan/go.rice#installation"
