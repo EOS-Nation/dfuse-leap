@@ -13,6 +13,7 @@ date.
 
 ### Added
 
+* Added support for EOSIO 2.1.x (requires 2.1.1 to have full data since some data where bogus in 2.1.0)
 * Added support for environment variable `EOSWS_PUSH_V1_OUTPUT=true` that forces push-transaction (guarantee:in-block) to output the same content format as nodeos 2.0.x (with Inlines)
 * Added support for environment variable `DSTORE_S3_BUFFERED_READ=true` that forces reading S3 files (ex: blocks) ahead of processing, useful when S3 provider has trouble keeping long connections alive.
 * Added support for looking up irreversible blocks on blockmeta (when the LIB was stuck for a while) from tokenmeta and trxdb-loader. They now use '--common-blockmeta-addr' flag if available
@@ -54,6 +55,7 @@ date.
 * **Breaking Change** Changed `--statedb-enable-pipeline` flag to `--statedb-disable-pipeline` to make it clearer that it should not be disable, if you were using the flag, change the name and invert the logical value (i.e. `--state-enable-pipeline=false` becomes `--state-disable-pipeline=true`)
 
 ### Fixed
+* Fixed Firehose gRPC listening address over plain text.
 * Fixed validation of transaction ID passed to WebSocket `get_transaction` API, the prior validation was too permissive.
 * Fixed a bug making search-forkresolver useless, because ignored by search-router.
 * Fixed a bug on StateDB server not accepting symbol and symbol code as `scope` parameter value.
