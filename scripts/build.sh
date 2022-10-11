@@ -79,7 +79,7 @@ build() {
 
   if [[ $force_build == true ]]; then
     echo "** Generating static assets **"
-    go generate ./..
+    go generate ./...
   fi
 
   if ! [[ $prepare_only == true ]]; then
@@ -91,6 +91,8 @@ build() {
 }
 
 checks() {
+  echo "** Running checks **"
+
   found_error=
   if ! command -v go &>/dev/null; then
     echo "The 'go' command (version 1.18+) is required to build a version locally, install it following https://golang.org/doc/install#install"
@@ -127,7 +129,7 @@ checks() {
 
     if [[ $install_rice == true ]]; then
       pushd /tmp >/dev/null
-      echo "Installing 'rice' executable"
+      echo "** Installing 'rice' executable **"
       go install github.com/GeertJohan/go.rice@latest
       go install github.com/GeertJohan/go.rice/rice@latest
       popd >/dev/null
@@ -153,7 +155,7 @@ usage_error() {
 }
 
 usage() {
-  echo "usage: ./scripts/build.sh [-f] [-s] [-y] [-p]"
+  echo "usage: ./scripts/build.sh [-f] [-s] [-y] [-p] [-d] [-e]"
   echo ""
   echo "Checks build requirements and build a development local version of the"
   echo "'dfuseeos' binary."
