@@ -79,7 +79,7 @@ build() {
 
   if [[ $force_build == true ]]; then
     echo "** Generating static assets **"
-    go generate ./..
+    go generate ./...
   fi
 
   if ! [[ $prepare_only == true ]]; then
