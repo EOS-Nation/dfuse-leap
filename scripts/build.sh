@@ -91,7 +91,6 @@ build() {
 }
 
 checks() {
-
   echo "** Running checks **"
 
   found_error=
@@ -116,9 +115,6 @@ checks() {
   fi
 
   if ! command -v rice &>/dev/null; then
-
-    echo "** Rice executable not found"
-
     install_rice=$yes
     if [[ $yes != true ]]; then
       if [ ! -t 0 ]; then
@@ -131,14 +127,12 @@ checks() {
       fi
     fi
 
-    echo "install_rice: $install_rice"
-
     if [[ $install_rice == true ]]; then
-      # pushd /tmp >/dev/null
+      pushd /tmp >/dev/null
       echo "** Installing 'rice' executable **"
       go install github.com/GeertJohan/go.rice@latest
       go install github.com/GeertJohan/go.rice/rice@latest
-      # popd >/dev/null
+      popd >/dev/null
     else
       echo "The 'rice' executable is required to build a version locally, install it following https://github.com/GeertJohan/go.rice#installation"
       found_error=true
@@ -161,7 +155,7 @@ usage_error() {
 }
 
 usage() {
-  echo "usage: ./scripts/build.sh [-f] [-s] [-y] [-p]"
+  echo "usage: ./scripts/build.sh [-f] [-s] [-y] [-p] [-d] [-e]"
   echo ""
   echo "Checks build requirements and build a development local version of the"
   echo "'dfuseeos' binary."
