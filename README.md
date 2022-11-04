@@ -22,15 +22,7 @@ development chain by also managing the block producing node for you.
 ### Operating System
 * Linux or macOS (no Windows support for now, should work through WSL2 (**untested**))
 
-### dfuse Instrumented nodeos (deep-mind)
-* See [DEPENDENCIES.md](DEPENDENCIES.md) for instructions on how to get an instrumented `nodeos` binary.
-
 ## Installing
-
-### From a pre-built release
-
-* Download a tarball from the [GitHub Releases Tab](https://github.com/dfuse-io/dfuse-eosio/releases).
-* Put the binary `dfuseeos` in your `PATH`.
 
 ### From source
 
