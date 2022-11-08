@@ -97,6 +97,8 @@ github.com/EOS-Nation/dauth v0.0.0-20221005084143-ac9c21c6d96c h1:DHMLie+pPlqNcy
 github.com/EOS-Nation/dauth v0.0.0-20221005084143-ac9c21c6d96c/go.mod h1:fh/Ko4s51KJDDPxAoq0yI8guzduNE+Tar66Z2Siv72I=
 github.com/EOS-Nation/dauth v0.0.0-20221005084741-e79ebf7b78e8 h1:t159zrC+EL1eheEsXuvje/Kea18I9nsMcb+Zy8VkjjM=
 github.com/EOS-Nation/dauth v0.0.0-20221005084741-e79ebf7b78e8/go.mod h1:fh/Ko4s51KJDDPxAoq0yI8guzduNE+Tar66Z2Siv72I=
+github.com/EOS-Nation/dgrpc v0.0.0-20221108114110-11d55ce0db5d h1:ZcWV1OgAZwobORajO6VOJiSk7j9Q+lG76Qx+fWlNZjM=
+github.com/EOS-Nation/dgrpc v0.0.0-20221108114110-11d55ce0db5d/go.mod h1:M5ainC6AOmwdqBxKqdY4bkd4VVvFcxK/vnkJEQt73ZA=
 github.com/EOS-Nation/dstore v0.0.0-20220908095022-20cd13d5dc4c h1:Tx3MDgdy4aKPoBAotXitGV+uQaMaG4dJlO2UXNMcd90=
 github.com/EOS-Nation/dstore v0.0.0-20220908095022-20cd13d5dc4c/go.mod h1:8o9B/vIwdInSkr4TfYFzEsWqfIRZfrLNRaOp4R6uk2M=
 github.com/EOS-Nation/firehose v0.1.1-0.20211125122622-4d3db7b50f2c h1:+CnfpKkQN5OD9psau1h007gjk1Ool+GU9dswp3AOA+k=

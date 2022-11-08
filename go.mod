@@ -248,4 +248,5 @@ replace (
 	github.com/streamingfast/dauth => github.com/EOS-Nation/dauth v0.0.0-20221005084741-e79ebf7b78e8
 	github.com/streamingfast/dstore => github.com/EOS-Nation/dstore v0.0.0-20220908095022-20cd13d5dc4c
 	github.com/streamingfast/firehose => github.com/EOS-Nation/firehose v0.1.1-0.20221108115205-4df3500bfa47
+	github.com/streamingfast/dgrpc => github.com/EOS-Nation/dgrpc v0.0.0-20221108114110-11d55ce0db5d
 )
