@@ -99,12 +99,16 @@ github.com/EOS-Nation/dauth v0.0.0-20221005084741-e79ebf7b78e8 h1:t159zrC+EL1ehe
 github.com/EOS-Nation/dauth v0.0.0-20221005084741-e79ebf7b78e8/go.mod h1:fh/Ko4s51KJDDPxAoq0yI8guzduNE+Tar66Z2Siv72I=
 github.com/EOS-Nation/dgrpc v0.0.0-20221108114110-11d55ce0db5d h1:ZcWV1OgAZwobORajO6VOJiSk7j9Q+lG76Qx+fWlNZjM=
 github.com/EOS-Nation/dgrpc v0.0.0-20221108114110-11d55ce0db5d/go.mod h1:M5ainC6AOmwdqBxKqdY4bkd4VVvFcxK/vnkJEQt73ZA=
+github.com/EOS-Nation/dgrpc v0.0.0-20221108170744-d0c2d8abe98f h1:4X3mWMmEvc34LG/IPssEyN02GaHh/NrBnnasWtcMn7M=
+github.com/EOS-Nation/dgrpc v0.0.0-20221108170744-d0c2d8abe98f/go.mod h1:M5ainC6AOmwdqBxKqdY4bkd4VVvFcxK/vnkJEQt73ZA=
 github.com/EOS-Nation/dstore v0.0.0-20220908095022-20cd13d5dc4c h1:Tx3MDgdy4aKPoBAotXitGV+uQaMaG4dJlO2UXNMcd90=
 github.com/EOS-Nation/dstore v0.0.0-20220908095022-20cd13d5dc4c/go.mod h1:8o9B/vIwdInSkr4TfYFzEsWqfIRZfrLNRaOp4R6uk2M=
 github.com/EOS-Nation/firehose v0.1.1-0.20211125122622-4d3db7b50f2c h1:+CnfpKkQN5OD9psau1h007gjk1Ool+GU9dswp3AOA+k=
 github.com/EOS-Nation/firehose v0.1.1-0.20211125122622-4d3db7b50f2c/go.mod h1:auHgW36yXwOFjyQFeQIsjrMZzN4gv81iyGuAQzO0z9Q=
 github.com/EOS-Nation/firehose v0.1.1-0.20221108115205-4df3500bfa47 h1:9QwCuDlFHz1sp+rxkWS/rkWytmNDVdB5LzrSeDNKzHw=
 github.com/EOS-Nation/firehose v0.1.1-0.20221108115205-4df3500bfa47/go.mod h1:0J2BlHgH9sFyYvH1acQB8c5WyPyfigH5kHnKXLCd1PQ=
+github.com/EOS-Nation/firehose v0.1.1-0.20221109131056-e9c526ce351e h1:DBTHmt7vkVKPefsxyNwdzDHiT8hsCBefHWvFEdoIKZ4=
+github.com/EOS-Nation/firehose v0.1.1-0.20221109131056-e9c526ce351e/go.mod h1:MO8mgZUEOLgCfc8jIfRIT/XD3Tw6Xxg++qx7XXQUMQA=
 github.com/GeertJohan/go.incremental v1.0.0/go.mod h1:6fAjUhbVuX1KcMD3c8TEgVUqmo4seqhv0i0kdATSkM0=
 github.com/GeertJohan/go.rice v1.0.0/go.mod h1:eH6gbSOAUv07dQuZVnBmoDP8mgsM1rtixis4Tib9if0=
 github.com/GeertJohan/go.rice v1.0.2 h1:PtRw+Tg3oa3HYwiDBZyvOJ8LdIyf6lAovJJtr7YOAYk=
