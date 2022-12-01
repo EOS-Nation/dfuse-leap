@@ -42,6 +42,10 @@ build() {
   if [[ $exclude_eosq != true && (! -d eosq/eosq-build || $force_build == true) ]]; then
     pushd eosq >/dev/null
     echo "** Building eosq **"
+    if [[ $force_build == true ]]; then
+      echo "'force' is being set, cleaning node_modules folder before rebuilding"
+      rm -rf ./node_modules
+    fi
     yarn install && yarn build
     popd >/dev/null
   fi
@@ -68,6 +72,10 @@ build() {
       pushd dlauncher/dashboard >/dev/null
       pushd client >/dev/null
       echo "** Building dashboard **"
+      if [[ $force_build == true ]]; then
+        echo "'force' is being set, cleaning node_modules folder before rebuilding"
+        rm -rf ./node_modules
+      fi
       yarn install && yarn build
       popd >/dev/null
 
@@ -135,7 +143,6 @@ checks() {
     if [[ $install_rice == true ]]; then
       pushd /tmp >/dev/null
       echo "** Installing 'rice' executable **"
-      go install github.com/GeertJohan/go.rice@latest
       go install github.com/GeertJohan/go.rice/rice@latest
       popd >/dev/null
     else
@@ -166,7 +173,7 @@ usage() {
   echo "'dfuseeos' binary."
   echo ""
   echo "Options"
-  echo "   -f          Force re-build all dependencies (eosq, dashboard)"
+  echo "   -f          Force re-build all dependencies (eosq, dashboard). Note this will also clean the node_modules folders before re-building."
   echo "   -s          Skip all checks usually performed by this script"
   echo "   -y          Answers yes to all question asked by this script"
   echo "   -p          Prepare only all required artifacts for build, but don't run the build actually"
