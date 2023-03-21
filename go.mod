@@ -102,7 +102,6 @@ require (
 	github.com/ajg/form v1.5.1 // indirect
 	github.com/alecthomas/participle v0.7.1 // indirect
 	github.com/antlr/antlr4 v0.0.0-20190819145818-b43a4c3a8015 // indirect
-	github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da // indirect
 	github.com/avast/retry-go v2.6.0+incompatible // indirect
 	github.com/aws/aws-sdk-go v1.37.0 // indirect
 	github.com/benbjohnson/clock v1.1.0 // indirect
@@ -119,9 +118,6 @@ require (
 	github.com/blevesearch/zap/v15 v15.0.3 // indirect
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b // indirect
 	github.com/bronze1man/go-yaml2json v0.0.0-20150129175009-f6f64b738964 // indirect
-	github.com/buraksezer/consistent v0.0.0-20191006190839-693edf70fd72 // indirect
-	github.com/buraksezer/olric v0.2.0 // indirect
-	github.com/buraksezer/pool v3.0.0+incompatible // indirect
 	github.com/census-instrumentation/opencensus-proto v0.3.0 // indirect
 	github.com/cespare/xxhash v1.1.0 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
@@ -152,15 +148,7 @@ require (
 	github.com/googleapis/gax-go/v2 v2.0.5 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.1.0 // indirect
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0 // indirect
-	github.com/hashicorp/errwrap v1.0.0 // indirect
-	github.com/hashicorp/go-immutable-radix v1.0.0 // indirect
-	github.com/hashicorp/go-msgpack v0.5.3 // indirect
-	github.com/hashicorp/go-multierror v1.0.0 // indirect
-	github.com/hashicorp/go-sockaddr v1.0.0 // indirect
-	github.com/hashicorp/golang-lru v0.5.3 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
-	github.com/hashicorp/logutils v1.0.0 // indirect
-	github.com/hashicorp/memberlist v0.1.5 // indirect
 	github.com/imkira/go-interpol v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
@@ -175,7 +163,6 @@ require (
 	github.com/mattn/go-ieproxy v0.0.0-20190702010315-6dee0af9227d // indirect
 	github.com/mattn/go-isatty v0.0.8 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
-	github.com/miekg/dns v1.0.14 // indirect
 	github.com/minio/highwayhash v1.0.0 // indirect
 	github.com/mitchellh/mapstructure v1.1.2 // indirect
 	github.com/mschoch/smat v0.2.0 // indirect
@@ -193,7 +180,6 @@ require (
 	github.com/prometheus/procfs v0.6.0 // indirect
 	github.com/prometheus/prom2json v1.3.0 // indirect
 	github.com/ryanuber/columnize v0.0.0-20170703205827-abc90934186a // indirect
-	github.com/sean-/seed v0.0.0-20170313163322-e2103e2c3529 // indirect
 	github.com/sergi/go-diff v1.0.1-0.20180205163309-da645544ed44 // indirect
 	github.com/sethvargo/go-retry v0.1.0 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
@@ -209,7 +195,6 @@ require (
 	github.com/tinylib/msgp v1.1.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.0.0 // indirect
-	github.com/vmihailenco/msgpack v4.0.4+incompatible // indirect
 	github.com/willf/bitset v1.1.10 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
@@ -221,7 +206,6 @@ require (
 	go.etcd.io/etcd/api/v3 v3.5.0 // indirect
 	go.etcd.io/etcd/client/pkg/v3 v3.5.0 // indirect
 	go.etcd.io/etcd/client/v3 v3.5.0 // indirect
-	go.opentelemetry.io/otel v0.13.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
 	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616 // indirect
 	golang.org/x/mod v0.4.2 // indirect
@@ -246,7 +230,9 @@ replace (
 	github.com/census-instrumentation/opencensus-proto v0.1.0-0.20181214143942-ba49f56771b8 => github.com/census-instrumentation/opencensus-proto v0.0.3-0.20181214143942-ba49f56771b8
 	github.com/graph-gophers/graphql-go => github.com/streamingfast/graphql-go v0.0.0-20210204202750-0e485a040a3c
 	github.com/streamingfast/dauth => github.com/EOS-Nation/dauth v0.0.0-20221005084741-e79ebf7b78e8
+	github.com/streamingfast/dgrpc => github.com/EOS-Nation/dgrpc v0.0.0-20221108170744-d0c2d8abe98f
 	github.com/streamingfast/dstore => github.com/EOS-Nation/dstore v0.0.0-20220908095022-20cd13d5dc4c
 	github.com/streamingfast/firehose => github.com/EOS-Nation/firehose v0.1.1-0.20221109131056-e9c526ce351e
-	github.com/streamingfast/dgrpc => github.com/EOS-Nation/dgrpc v0.0.0-20221108170744-d0c2d8abe98f
 )
+
+replace github.com/eoscanada/eos-go => github.com/EOS-Nation/eos-go v0.10.3-0.20230321114153-2fb4b4a107ee
