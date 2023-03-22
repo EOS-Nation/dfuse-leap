@@ -106,7 +106,7 @@ func testStateABIHex(ctx context.Context, t *testing.T, feedSourceWithBlocks blo
 
 	response := okQueryStateABI(e, "eosio.test", "")
 
-	jsonValueEqual(t, "abi", `{"abi": "0e656f73696f3a3a6162692f312e3000010576616c7565000102746f0675696e743634000100000000008139bd0000000576616c756500000000", "account": "eosio.test", "block_num": 5}`, response.Path("$"))
+	jsonValueEqual(t, "abi", `{"abi": "0e656f73696f3a3a6162692f312e3000010576616c7565000102746f0675696e743634000100000000008139bd0000000576616c75650000000000", "account": "eosio.test", "block_num": 5}`, response.Path("$"))
 }
 
 func testStateTableSingleRowHeadHex(ctx context.Context, t *testing.T, feedSourceWithBlocks blocksFeeder, e *httpexpect.Expect) {

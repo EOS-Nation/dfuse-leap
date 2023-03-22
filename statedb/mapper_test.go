@@ -132,7 +132,7 @@ func TestBlockMapper(t *testing.T) {
 				ct.ActionTraceSetABI(t, "eosio", validABI),
 			)),
 			expectedEntries: []string{
-				`abi:eosio:fffffffffffffffe => {"rawAbi":"000000000000000000"}`,
+				`abi:eosio:fffffffffffffffe => {"rawAbi":"00000000000000000000"}`,
 			},
 		},
 		{
