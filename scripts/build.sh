@@ -143,6 +143,7 @@ checks() {
     if [[ $install_rice == true ]]; then
       pushd /tmp >/dev/null
       echo "** Installing 'rice' executable **"
+      go install github.com/GeertJohan/go.rice@latest
       go install github.com/GeertJohan/go.rice/rice@latest
       popd >/dev/null
     else
