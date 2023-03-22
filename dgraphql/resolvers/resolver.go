@@ -1015,9 +1015,17 @@ func (t *ActionTrace) Data() *commonTypes.JSON                 { return t.Action
 func (t *ActionTrace) JSON() *commonTypes.JSON                 { return t.Action().JSON() }
 func (t *ActionTrace) HexData() string                         { return t.Action().HexData() }
 func (t *ActionTrace) TrxID() string                           { return t.actionTrace.TransactionId }
-func (t *ActionTrace) BlockNum() types.Uint64                  { return types.Uint64(t.actionTrace.BlockNum) }
-func (t *ActionTrace) BlockID() string                         { return t.actionTrace.ProducerBlockId }
-func (t *ActionTrace) BlockTime() graphql.Time                 { return toTime(t.actionTrace.BlockTime) }
+func (t *ActionTrace) ReturnValueHexData() *string {
+	if len(t.actionTrace.ReturnValue) == 0 {
+		return nil
+	} else {
+		res := hex.EncodeToString(t.actionTrace.ReturnValue)
+		return &res
+	}
+}
+func (t *ActionTrace) BlockNum() types.Uint64  { return types.Uint64(t.actionTrace.BlockNum) }
+func (t *ActionTrace) BlockID() string         { return t.actionTrace.ProducerBlockId }
+func (t *ActionTrace) BlockTime() graphql.Time { return toTime(t.actionTrace.BlockTime) }
 
 func (t *ActionTrace) Console() string       { return t.actionTrace.Console }
 func (t *ActionTrace) ContextFree() bool     { return t.actionTrace.ContextFree }
