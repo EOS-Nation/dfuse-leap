@@ -127,7 +127,9 @@ checks() {
     fi
   fi
 
+  echo "** Checking for 'rice' executable **"
   if ! command -v rice &>/dev/null; then
+    echo "** 'rice' executable not found **"
     install_rice=$yes
     if [[ $yes != true ]]; then
       if [ ! -t 0 ]; then
