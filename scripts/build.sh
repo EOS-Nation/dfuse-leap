@@ -127,7 +127,7 @@ checks() {
     fi
   fi
 
-  if ! command -v rice &>/dev/null; then
+  if ! command -v rice &> /dev/null; then
     install_rice=$yes
     if [[ $yes != true ]]; then
       if [ ! -t 0 ]; then
@@ -143,7 +143,8 @@ checks() {
     if [[ $install_rice == true ]]; then
       pushd /tmp >/dev/null
       echo "** Installing 'rice' executable **"
-      go install github.com/GeertJohan/go.rice/rice@latest
+      go install github.com/GeertJohan/go.rice@v1.0.3
+      go install github.com/GeertJohan/go.rice/rice@v1.0.3
       popd >/dev/null
     else
       echo "The 'rice' executable is required to build a version locally, install it following https://github.com/GeertJohan/go.rice#installation"
