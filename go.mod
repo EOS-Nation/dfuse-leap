@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	contrib.go.opencensus.io/exporter/stackdriver v0.13.8
-	github.com/GeertJohan/go.rice v1.0.2
+	github.com/GeertJohan/go.rice v1.0.3
 	github.com/ShinyTrinkets/overseer v0.3.0
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/andreyvit/diff v0.0.0-20170406064948-c7f18ee00883
@@ -126,7 +126,7 @@ require (
 	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/coreos/go-systemd/v22 v22.3.2 // indirect
 	github.com/couchbase/vellum v1.0.2 // indirect
-	github.com/daaku/go.zipexe v1.0.1 // indirect
+	github.com/daaku/go.zipexe v1.0.2 // indirect
 	github.com/dgraph-io/badger/v2 v2.0.3 // indirect
 	github.com/dgraph-io/ristretto v0.0.2-0.20200115201040-8f368f2f2ab3 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
