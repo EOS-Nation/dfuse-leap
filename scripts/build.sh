@@ -90,9 +90,9 @@ build() {
     # todo replace this with go generate -skip '' ./... whenever the skip flag has been released for go generate (go 1.20 probably)
     go generate ./dgraphql/schema/generate.go
 
-    if [[ $exclude_eosq != true ]]; then
-      go generate ./eosq/app/eosq/server.go
-    fi
+    # if [[ $exclude_eosq != true ]]; then
+    go generate ./eosq/app/eosq/server.go
+    # fi
   fi
 
   if ! [[ $prepare_only == true ]]; then
@@ -127,9 +127,7 @@ checks() {
     fi
   fi
 
-  echo "** Checking for 'rice' executable **"
-  if ! command -v rice &>/dev/null; then
-    echo "** 'rice' executable not found **"
+  if ! command -v rice &> /dev/null; then
     install_rice=$yes
     if [[ $yes != true ]]; then
       if [ ! -t 0 ]; then
