@@ -40,7 +40,7 @@ require (
 	github.com/spf13/viper v1.7.0
 	github.com/streamingfast/blockmeta v0.0.2-0.20210811194956-90dc4202afda
 	github.com/streamingfast/bstream v0.0.2-0.20210901144836-9a626db444c5
-	github.com/streamingfast/cli v0.0.3-0.20210811201236-5c00ec55462d
+	github.com/streamingfast/cli v0.0.4-0.20220630165922-bc58c6666fc8
 	github.com/streamingfast/client-go v0.0.0-20210812010037-2ae1ded7ca05
 	github.com/streamingfast/dauth v0.0.0-20210811181149-e8fd545948cc
 	github.com/streamingfast/dbin v0.0.0-20210809205249-73d5eca35dc5
@@ -59,7 +59,7 @@ require (
 	github.com/streamingfast/fluxdb v0.0.0-20210811195408-0515ef659298
 	github.com/streamingfast/jsonpb v0.0.0-20210811021341-3670f0aa02d0
 	github.com/streamingfast/kvdb v0.0.2-0.20210811194032-09bf862bd2e3
-	github.com/streamingfast/logging v0.0.0-20210811175431-f3b44b61606a
+	github.com/streamingfast/logging v0.0.0-20221209193439-bff11742bf4c
 	github.com/streamingfast/merger v0.0.3-0.20210820210545-ca8b1a40ae2a
 	github.com/streamingfast/node-manager v0.0.2-0.20210830135731-4b00105a1479
 	github.com/streamingfast/opaque v0.0.0-20210811180740-0c01d37ea308
@@ -235,4 +235,4 @@ replace (
 	github.com/streamingfast/firehose => github.com/EOS-Nation/firehose v0.1.1-0.20221109131056-e9c526ce351e
 )
 
-replace github.com/eoscanada/eos-go => github.com/EOS-Nation/eos-go v0.10.3-0.20230321114153-2fb4b4a107ee
+replace github.com/eoscanada/eos-go => github.com/EOS-Nation/eos-go v0.10.3-0.20230328093433-ac1d9097f48b
