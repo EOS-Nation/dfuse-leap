@@ -40,7 +40,7 @@ require (
 	github.com/spf13/viper v1.7.0
 	github.com/streamingfast/blockmeta v0.0.2-0.20210811194956-90dc4202afda
 	github.com/streamingfast/bstream v0.0.2-0.20210901144836-9a626db444c5
-	github.com/streamingfast/cli v0.0.4-0.20220630165922-bc58c6666fc8
+	github.com/streamingfast/cli v0.0.3-0.20210811201236-5c00ec55462d
 	github.com/streamingfast/client-go v0.0.0-20210812010037-2ae1ded7ca05
 	github.com/streamingfast/dauth v0.0.0-20210811181149-e8fd545948cc
 	github.com/streamingfast/dbin v0.0.0-20210809205249-73d5eca35dc5
