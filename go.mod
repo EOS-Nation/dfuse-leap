@@ -218,7 +218,7 @@ require (
 	golang.org/x/tools v0.6.0 // indirect
 	google.golang.org/api v0.53.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/genproto v0.0.0-20210805201207-89edb61ffb67 // indirect; indirects
+	google.golang.org/genproto v0.0.0-20210805201207-89edb61ffb67 // indirect
 	gopkg.in/ini.v1 v1.51.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
