@@ -59,7 +59,7 @@ require (
 	github.com/streamingfast/fluxdb v0.0.0-20210811195408-0515ef659298
 	github.com/streamingfast/jsonpb v0.0.0-20210811021341-3670f0aa02d0
 	github.com/streamingfast/kvdb v0.0.2-0.20210811194032-09bf862bd2e3
-	github.com/streamingfast/logging v0.0.0-20221209193439-bff11742bf4c
+	github.com/streamingfast/logging v0.0.0-20210811175431-f3b44b61606a
 	github.com/streamingfast/merger v0.0.3-0.20210820210545-ca8b1a40ae2a
 	github.com/streamingfast/node-manager v0.0.2-0.20210830135731-4b00105a1479
 	github.com/streamingfast/opaque v0.0.0-20210811180740-0c01d37ea308
@@ -218,7 +218,7 @@ require (
 	golang.org/x/tools v0.6.0 // indirect
 	google.golang.org/api v0.53.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/genproto v0.0.0-20210805201207-89edb61ffb67 // indirect
+	google.golang.org/genproto v0.0.0-20210805201207-89edb61ffb67 // indirect; indirects
 	gopkg.in/ini.v1 v1.51.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
@@ -235,4 +235,4 @@ replace (
 	github.com/streamingfast/firehose => github.com/EOS-Nation/firehose v0.1.1-0.20221109131056-e9c526ce351e
 )
 
-replace github.com/eoscanada/eos-go => github.com/EOS-Nation/eos-go v0.10.3-0.20230328093433-ac1d9097f48b
+replace github.com/eoscanada/eos-go => github.com/EOS-Nation/eos-go v0.10.3-0.20230328111622-b58e29c1532e
