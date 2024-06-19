@@ -86,6 +86,7 @@ func TestParseFromFile(t *testing.T) {
 	}{
 		{"full", "testdata/deep-mind.dmlog", nil, nil},
 		{"full-3.1.x", "testdata/deep-mind-3.1.x.dmlog", nil, nil},
+		{"deep-mind-spring-1.0.x-pre-savanna", "testdata/deep-mind-spring-1.0.x-pre-savanna.dmlog", nil, nil},
 		{"max-console-log", "testdata/deep-mind.dmlog", blockWithConsole, []ConsoleReaderOption{LimitConsoleLength(10)}},
 	}
 
