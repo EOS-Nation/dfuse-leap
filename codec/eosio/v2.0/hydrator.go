@@ -19,7 +19,7 @@ type Hydrator struct {
 	logger *zap.Logger
 }
 
-func (h *Hydrator) HydrateBlock(block *pbcodec.Block, input []byte) error {
+func (h *Hydrator) HydrateBlock(block *pbcodec.Block, input []byte, _ string) error {
 	h.logger.Debug("hydrating block from bytes")
 
 	blockState := &eos.BlockState{}
