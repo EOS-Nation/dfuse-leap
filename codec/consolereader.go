@@ -514,11 +514,11 @@ func (ctx *parseCtx) readAcceptedBlock(line string) (*pbcodec.Block, error) {
 
 // Line format:
 //
-//	ACCEPTED_BLOCK_V2 ${block_id} ${block_num} ${lib} ${block_state_hex} ${finality_data_hex}
+//	ACCEPTED_BLOCK_V2 ${block_id} ${block_num} ${lib} ${blk} ${finality_data_hex} ${proposer_policy} ${finalizer_policy_with_string_key}
 func (ctx *parseCtx) readAcceptedBlockV2(line string) (*pbcodec.Block, error) {
-	chunks := strings.SplitN(line, " ", 6)
-	if len(chunks) != 6 {
-		return nil, fmt.Errorf("expected 6 fields, got %d", len(chunks))
+	chunks := strings.SplitN(line, " ", 8)
+	if len(chunks) != 8 {
+		return nil, fmt.Errorf("expected 8 fields, got %d", len(chunks))
 	}
 
 	blockNum, err := strconv.ParseInt(chunks[2], 10, 64)
@@ -548,6 +548,22 @@ func (ctx *parseCtx) readAcceptedBlockV2(line string) (*pbcodec.Block, error) {
 		return nil, fmt.Errorf("lib not a valid number, got: %q", chunks[2])
 	}
 	block.DposIrreversibleBlocknum = uint32(lib)
+
+	proposerPolicyHex, err := hex.DecodeString(chunks[6])
+	if err != nil {
+		return nil, fmt.Errorf("unable to decode proposer policy hex: %w", err)
+	}
+
+	type ProposerPolicy struct {
+		ActiveTime       eos.BlockTimestamp             `json:"active_time"`
+		ProducerSchedule *eos.ProducerAuthoritySchedule `json:"proposer_schedule"`
+	}
+
+	proposerPolicy := &ProposerPolicy{}
+	if err := unmarshalBinary(proposerPolicyHex, proposerPolicy); err != nil {
+		return nil, fmt.Errorf("unmarshalling binary proposer policy: %w", err)
+	}
+	block.ActiveScheduleV2 = eosio.ProducerAuthorityScheduleToDEOS(proposerPolicy.ProducerSchedule)
 
 	zlog.Debug("blocking until abi decoder has decoded every transaction pushed to it")
 	err = ctx.abiDecoder.endBlock(ctx.block)
