@@ -4,6 +4,10 @@
 This is a fork of [dfuse for EOSIO](https://github.com/dfuse-io/dfuse-eosio), including basic support for running on the
 leap blockchain software. 
 
+> [!NOTE]  
+> dfuse has been deprecated and all services by EOS Nation have been shut down. To extract data from Antelope chains we recommend using our Firehose and Substreams endpoints which can be found on [https://pinax.network](https://pinax.network).
+
+
 _**Please note** that this fork does not (yet) implement new features added with leap 3.1. That means it will not include 
 decoded action results in dgraphql, websocket or rest endpoints. But it enables the current feature set of dfuse on the
 updated leap 3.1 code._
