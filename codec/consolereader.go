@@ -25,6 +25,7 @@ import (
 	"strings"
 
 	"github.com/dfuse-io/dfuse-eosio/codec/eosio"
+	"github.com/dfuse-io/dfuse-eosio/codec/eosio/spring_v1"
 	eosio_v2_0 "github.com/dfuse-io/dfuse-eosio/codec/eosio/v2.0"
 	eosio_v2_1 "github.com/dfuse-io/dfuse-eosio/codec/eosio/v2.1"
 	pbcodec "github.com/dfuse-io/dfuse-eosio/pb/dfuse/eosio/codec/v1"
@@ -33,8 +34,8 @@ import (
 	"go.uber.org/zap"
 )
 
-var supportedVersions = []uint64{12, 13}
-var supportedVersionStrings = []string{"12", "13"}
+var supportedVersions = []uint64{1, 12, 13}
+var supportedVersionStrings = []string{"1", "12", "13"}
 
 type ConsoleReaderOption interface {
 	apply(reader *ConsoleReader)
@@ -216,6 +217,14 @@ func (l *ConsoleReader) Read() (out interface{}, err error) {
 
 		case strings.HasPrefix(line, "DTRX_OP FAILED"):
 			err = ctx.readFailedDTrxOp(line)
+
+		case strings.HasPrefix(line, "ACCEPTED_BLOCK_V2"):
+			block, err := ctx.readAcceptedBlockV2(line)
+			if err != nil {
+				return nil, l.formatError(line, err)
+			}
+
+			return block, nil
 
 		case strings.HasPrefix(line, "ACCEPTED_BLOCK"):
 			block, err := ctx.readAcceptedBlock(line)
@@ -486,11 +495,75 @@ func (ctx *parseCtx) readAcceptedBlock(line string) (*pbcodec.Block, error) {
 		return nil, fmt.Errorf("unable to decode block %d state hex: %w", blockNum, err)
 	}
 
-	if err := ctx.hydrator.HydrateBlock(ctx.block, blockStateHex); err != nil {
+	if err := ctx.hydrator.HydrateBlock(ctx.block, blockStateHex, "v1"); err != nil {
 		return nil, fmt.Errorf("hydrate block %d: %w", blockNum, err)
 	}
 
 	block := ctx.block
+
+	zlog.Debug("blocking until abi decoder has decoded every transaction pushed to it")
+	err = ctx.abiDecoder.endBlock(ctx.block)
+	if err != nil {
+		return nil, fmt.Errorf("abi decoding post-process failed: %w", err)
+	}
+
+	zlog.Debug("abi decoder terminated all decoding operations, resetting block")
+	ctx.resetBlock()
+	return block, nil
+}
+
+// Line format:
+//
+//	ACCEPTED_BLOCK_V2 ${block_id} ${block_num} ${lib} ${blk} ${finality_data_hex} ${proposer_policy} ${finalizer_policy_with_string_key}
+func (ctx *parseCtx) readAcceptedBlockV2(line string) (*pbcodec.Block, error) {
+	chunks := strings.SplitN(line, " ", 8)
+	if len(chunks) != 8 {
+		return nil, fmt.Errorf("expected 8 fields, got %d", len(chunks))
+	}
+
+	blockNum, err := strconv.ParseInt(chunks[2], 10, 64)
+	if err != nil {
+		return nil, fmt.Errorf("block_num not a valid number, got: %q", chunks[1])
+	}
+
+	if ctx.activeBlockNum != blockNum {
+		return nil, fmt.Errorf("block_num %d doesn't match the active block num (%d)", blockNum, ctx.activeBlockNum)
+	}
+
+	blockStateHex, err := hex.DecodeString(chunks[4])
+	if err != nil {
+		return nil, fmt.Errorf("unable to decode block %d state hex: %w", blockNum, err)
+	}
+
+	if err := ctx.hydrator.HydrateBlock(ctx.block, blockStateHex, "v2"); err != nil {
+		return nil, fmt.Errorf("hydrate block %d: %w", blockNum, err)
+	}
+
+	block := ctx.block
+	block.Id = chunks[1]
+	block.Number = uint32(blockNum)
+
+	lib, err := strconv.ParseInt(chunks[3], 10, 32)
+	if err != nil {
+		return nil, fmt.Errorf("lib not a valid number, got: %q", chunks[2])
+	}
+	block.DposIrreversibleBlocknum = uint32(lib)
+
+	proposerPolicyHex, err := hex.DecodeString(chunks[6])
+	if err != nil {
+		return nil, fmt.Errorf("unable to decode proposer policy hex: %w", err)
+	}
+
+	type ProposerPolicy struct {
+		ActiveTime       eos.BlockTimestamp             `json:"active_time"`
+		ProducerSchedule *eos.ProducerAuthoritySchedule `json:"proposer_schedule"`
+	}
+
+	proposerPolicy := &ProposerPolicy{}
+	if err := unmarshalBinary(proposerPolicyHex, proposerPolicy); err != nil {
+		return nil, fmt.Errorf("unmarshalling binary proposer policy: %w", err)
+	}
+	block.ActiveScheduleV2 = eosio.ProducerAuthorityScheduleToDEOS(proposerPolicy.ProducerSchedule)
 
 	zlog.Debug("blocking until abi decoder has decoded every transaction pushed to it")
 	err = ctx.abiDecoder.endBlock(ctx.block)
@@ -1054,11 +1127,16 @@ func normalizeRAMOpAction(input string) string {
 //	  DEEP_MIND_VERSION ${major_version}
 //
 //	Version 13
-//	  DEEP_MIND_VERSION ${major_version} ${minor_version}
+//	  DEEP_MIND_VERSION ${software} ${major_version} ${minor_version}
 func (ctx *parseCtx) readDeepmindVersion(line string) (majorVersion uint64, minorVersion uint64, hydrator eosio.Hydrator, err error) {
 	chunks, err := splitNToM(line, 2, 4)
 	if err != nil {
 		return 0, 0, nil, err
+	}
+
+	software := "eos"
+	if len(chunks) == 4 {
+		software = chunks[1]
 	}
 
 	if len(chunks) < 4 {
@@ -1089,8 +1167,10 @@ func (ctx *parseCtx) readDeepmindVersion(line string) (majorVersion uint64, mino
 		return majorVersion, minorVersion, nil, fmt.Errorf("deep mind reported version %d, but this reader supports only %s", majorVersion, strings.Join(supportedVersionStrings, ", "))
 	}
 
-	zlog.Info("read deep mind version", zap.Uint64("major_version", majorVersion))
-	if majorVersion == 13 {
+	zlog.Info("read deep mind version", zap.String("sofware", software), zap.Uint64("major_version", majorVersion))
+	if strings.ToLower(software) == "spring" {
+		return majorVersion, minorVersion, spring_v1.NewHydrator(zlog), nil
+	} else if majorVersion == 13 {
 		return majorVersion, minorVersion, eosio_v2_1.NewHydrator(zlog), nil
 	}
 
